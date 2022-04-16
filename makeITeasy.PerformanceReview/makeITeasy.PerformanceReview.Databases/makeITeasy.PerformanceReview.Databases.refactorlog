@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="1c8a5bae-2965-402d-b8f1-ee627dbe2203" ChangeDateTime="04/16/2022 12:57:34">
+    <Property Name="ElementName" Value="[dbo].[PerformanceReviewEvaluationItem].[PerformanceReviewItem]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PerformanceReviewEvaluationItem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PerformanceReviewItemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f02cfa04-6463-4f57-840e-e03573b64ca1" ChangeDateTime="04/16/2022 13:21:19">
+    <Property Name="ElementName" Value="[dbo].[PerformanceReview]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[PerformanceReviewMain]" />
+  </Operation>
+</Operations>

@@ -1,0 +1,59 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "PeformanceReviewDbContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": null,
+   "ProjectRootNamespace": "makeITeasy.PerformanceReview.Infrastructure",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[dbo].[PerformanceReviewCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PerformanceReviewEvaluationItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PerformanceReviewEvalutation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PerformanceReviewItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PerformanceReviewMain]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "makeITeasy.PerformanceReview.Databases\\makeITeasy.PerformanceReview.Databases.sqlproj",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": true,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": true,
+   "UseSpatial": false
+}
