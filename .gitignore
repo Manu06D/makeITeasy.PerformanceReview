@@ -341,3 +341,7 @@ healthchecksdb
 
 wwwrootlib
 wwwrootdist
+
+.jfm
+*.jfm
+*.dbmdl

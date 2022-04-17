@@ -68,4 +68,7 @@
   <ItemGroup>
     <RefactorLog Include="makeITeasy.PerformanceReview.Databases.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SqlSchemaCompare.localdb.scmp" />
+  </ItemGroup>
 </Project>

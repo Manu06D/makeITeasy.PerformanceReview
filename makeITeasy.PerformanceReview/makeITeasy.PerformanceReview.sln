@@ -5,11 +5,15 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "makeITeasy.PerformanceReview.Databases", "makeITeasy.PerformanceReview.Databases\makeITeasy.PerformanceReview.Databases.sqlproj", "{AF1280B1-1BDE-429E-AEC6-2855E0E37316}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "makeITeasy.PerformanceReview.Models", "makeITeasy.PerformanceReview.Models\makeITeasy.PerformanceReview.Models.csproj", "{E6119C68-145B-4526-851C-AC1441332292}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "makeITeasy.PerformanceReview.Models", "makeITeasy.PerformanceReview.Models\makeITeasy.PerformanceReview.Models.csproj", "{E6119C68-145B-4526-851C-AC1441332292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "makeITeasy.PerformanceReview.BusinessCore", "makeITeasy.PerformanceReview.BusinessCore\makeITeasy.PerformanceReview.BusinessCore.csproj", "{7E1A29DE-CC3C-49C4-8E94-CE55625B641F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "makeITeasy.PerformanceReview.BusinessCore", "makeITeasy.PerformanceReview.BusinessCore\makeITeasy.PerformanceReview.BusinessCore.csproj", "{7E1A29DE-CC3C-49C4-8E94-CE55625B641F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "makeITeasy.PerformanceReview.Infrastructure", "makeITeasy.PerformanceReview.Infrastructure\makeITeasy.PerformanceReview.Infrastructure.csproj", "{86E252FF-8A10-4C52-975C-231B32F35C9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "makeITeasy.PerformanceReview.Infrastructure", "makeITeasy.PerformanceReview.Infrastructure\makeITeasy.PerformanceReview.Infrastructure.csproj", "{86E252FF-8A10-4C52-975C-231B32F35C9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{900235FE-3E5D-4D43-B281-C9B4A858BF75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "makeITeasy.PerformanceReview.BlazorApp", "makeITeasy.PerformanceReview.BlazorApp\makeITeasy.PerformanceReview.BlazorApp.csproj", "{2BBAB0BA-2009-4B77-BC01-EE9A474BECEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,9 +39,16 @@ Global
 		{86E252FF-8A10-4C52-975C-231B32F35C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86E252FF-8A10-4C52-975C-231B32F35C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86E252FF-8A10-4C52-975C-231B32F35C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BBAB0BA-2009-4B77-BC01-EE9A474BECEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BBAB0BA-2009-4B77-BC01-EE9A474BECEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BBAB0BA-2009-4B77-BC01-EE9A474BECEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BBAB0BA-2009-4B77-BC01-EE9A474BECEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF1280B1-1BDE-429E-AEC6-2855E0E37316} = {900235FE-3E5D-4D43-B281-C9B4A858BF75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94B6B416-7606-499D-890F-20BD81D01D9A}
