@@ -10,7 +10,7 @@ namespace makeITeasy.PerformanceReview.Models
         public int PerformanceReviewEvalutionId { get; set; }
         public int PerformanceReviewItemId { get; set; }
 
-        public virtual PerformanceReviewEvalutation PerformanceReviewEvalution { get; set; }
-        public virtual PerformanceReviewItem PerformanceReviewItem { get; set; }
+        public virtual PerformanceReviewEvalutation PerformanceReviewEvalution { get; set; } = null!;
+        public virtual PerformanceReviewItem PerformanceReviewItem { get; set; } = null!;
     }
 }

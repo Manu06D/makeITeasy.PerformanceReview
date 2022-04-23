@@ -16,8 +16,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("User");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)

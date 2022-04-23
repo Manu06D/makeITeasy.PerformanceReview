@@ -16,12 +16,18 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("PerformanceReviewItem");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(512)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.IdNavigation)
+                .WithOne(p => p.PerformanceReviewItem)
+                .HasForeignKey<PerformanceReviewItem>(d => d.Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PerformanceReviewItem_ToEmployee");
 
             entity.HasOne(d => d.PerformanceReviewCategory)
                 .WithMany(p => p.PerformanceReviewItems)

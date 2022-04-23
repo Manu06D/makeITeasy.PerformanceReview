@@ -14,6 +14,10 @@
    "SelectedToBeGenerated": 2,
    "Tables": [
       {
+         "Name": "[dbo].[Employee]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PerformanceReviewCategory]",
          "ObjectType": 0
       },
@@ -26,11 +30,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewItem]",
+         "Name": "[dbo].[PerformanceReviewForm]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewMain]",
+         "Name": "[dbo].[PerformanceReviewItem]",
          "ObjectType": 0
       },
       {
@@ -53,7 +57,7 @@
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
-   "UseNullableReferences": false,
+   "UseNullableReferences": true,
    "UseSchemaFolders": false,
    "UseSpatial": false
 }

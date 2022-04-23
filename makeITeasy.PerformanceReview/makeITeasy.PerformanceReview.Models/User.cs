@@ -8,12 +8,14 @@ namespace makeITeasy.PerformanceReview.Models
     {
         public User()
         {
-            PerformanceReviewMains = new HashSet<PerformanceReviewMain>();
+            PerformanceReviewEvalutations = new HashSet<PerformanceReviewEvalutation>();
+            PerformanceReviewForms = new HashSet<PerformanceReviewForm>();
         }
 
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public virtual ICollection<PerformanceReviewMain> PerformanceReviewMains { get; set; }
+        public virtual ICollection<PerformanceReviewEvalutation> PerformanceReviewEvalutations { get; set; }
+        public virtual ICollection<PerformanceReviewForm> PerformanceReviewForms { get; set; }
     }
 }

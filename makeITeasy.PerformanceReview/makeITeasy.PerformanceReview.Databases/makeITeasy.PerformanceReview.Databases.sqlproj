@@ -59,11 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="User.sql" />
-    <Build Include="PerformanceReviewMain.sql" />
+    <Build Include="PerformanceReviewForm.sql" />
     <Build Include="PerformanceReviewCategory.sql" />
     <Build Include="PerformanceReviewItem.sql" />
     <Build Include="PerformanceReviewEvalutation.sql" />
     <Build Include="PerformanceReviewEvaluationItem.sql" />
+    <Build Include="Employee.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="makeITeasy.PerformanceReview.Databases.refactorlog" />

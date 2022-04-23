@@ -16,8 +16,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("PerformanceReviewEvaluationItem");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
             entity.HasOne(d => d.PerformanceReviewEvalution)
                 .WithMany(p => p.PerformanceReviewEvaluationItems)
                 .HasForeignKey(d => d.PerformanceReviewEvalutionId)

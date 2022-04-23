@@ -1,0 +1,95 @@
+﻿@using makeITeasy.AppFramework.Models
+@typeparam TItem where TItem : class, IBaseEntity
+@typeparam TQuery where TQuery:BaseTransactionQuery<TItem>, new()
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<TItem>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@Title</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudSpacer />
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" OnClick="CreateNewHandler"/>
+    </ToolBarContent>
+    <HeaderContent>
+        @HeaderContent
+    </HeaderContent>
+    <RowTemplate>
+        @RowTemplate(context)
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+    <NoRecordsContent>
+        <MudText>No matching records found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+</MudTable>
+
+@code {
+    [Inject]
+    private MediatR.IMediator _mediator { get; set; }
+
+    [Parameter]
+    public String Title { get; set; }
+
+    [Parameter]
+    public String DefaultSortColumn { get; set; }
+
+    [Parameter]
+    public Func<Task> CreateNewHandler { get; set; }
+
+    [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> RowTemplate { get; set; }
+
+    private MudTable<TItem> table;
+    private string searchString = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        ReloadTable();
+    }
+
+    public void ReloadTable()
+    {
+        table.ReloadServerData();
+    }
+
+    private async Task<TableData<TItem>> ServerReload(TableState state)
+    {
+        TQuery query = new ();
+        //query.Name = searchString;
+        query.Take = state.PageSize;
+        query.Skip = state.Page * state.PageSize;
+
+        var order = new AppFramework.Models.OrderBySpecification<string>(
+            string.IsNullOrWhiteSpace(state.SortLabel) ? DefaultSortColumn : state.SortLabel,
+            state.SortDirection == SortDirection.Descending);
+
+        query.AddOrder(order);
+
+        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<TItem>(query, true));
+
+        return new TableData<TItem>() { TotalItems = results.TotalItems, Items = results.Results };
+    }
+
+    private void Edit(int id)
+    {
+        //customer = customers.FirstOrDefault(c => c.Id == id);
+    }
+    private void Delete(int id)
+    {
+        //customerService.DeleteCustomer(id);
+        //snackBar.Add("Customer Deleted.", Severity.Success);
+        //GetCustomers();
+    }
+}

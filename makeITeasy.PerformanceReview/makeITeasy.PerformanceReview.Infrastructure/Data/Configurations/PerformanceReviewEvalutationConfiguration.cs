@@ -16,7 +16,15 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("PerformanceReviewEvalutation");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasOne(d => d.Employee)
+                .WithMany(p => p.PerformanceReviewEvalutations)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_PerformanceReviewEvalutation_ToEmployee");
+
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.PerformanceReviewEvalutations)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_PerformanceReviewEvalutation_ToUser");
 
             OnConfigurePartial(entity);
         }
