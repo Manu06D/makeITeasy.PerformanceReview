@@ -9,6 +9,7 @@ namespace makeITeasy.PerformanceReview.Models
         public PerformanceReviewForm()
         {
             PerformanceReviewCategories = new HashSet<PerformanceReviewCategory>();
+            PerformanceReviewEvalutations = new HashSet<PerformanceReviewEvalutation>();
             PerformanceReviewItems = new HashSet<PerformanceReviewItem>();
         }
 
@@ -18,6 +19,7 @@ namespace makeITeasy.PerformanceReview.Models
 
         public virtual User User { get; set; } = null!;
         public virtual ICollection<PerformanceReviewCategory> PerformanceReviewCategories { get; set; }
+        public virtual ICollection<PerformanceReviewEvalutation> PerformanceReviewEvalutations { get; set; }
         public virtual ICollection<PerformanceReviewItem> PerformanceReviewItems { get; set; }
     }
 }

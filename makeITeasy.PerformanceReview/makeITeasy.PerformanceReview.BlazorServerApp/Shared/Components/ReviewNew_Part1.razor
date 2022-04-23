@@ -69,7 +69,7 @@
     async Task CreateReview()
     {
         _processing = true;
-        var result = await _mediator.Send(new CreateEntityCommand<PerformanceReviewEvalutation>(new PerformanceReviewEvalutation() { EmployeeId = selectedEmployee.Id, PerformanceReviewId = selectedForm.Id, UserId = 1}));
+        var result = await _mediator.Send(new CreateEntityCommand<PerformanceReviewEvalutation>(new PerformanceReviewEvalutation() { EmployeeId = selectedEmployee.Id, PerformanceReviewFormId = selectedForm.Id, UserId = 1}));
 
         if(result.Result == CommandState.Success)
         {

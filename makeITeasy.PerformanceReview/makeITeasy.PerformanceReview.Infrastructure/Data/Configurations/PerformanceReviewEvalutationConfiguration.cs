@@ -21,6 +21,12 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .HasForeignKey(d => d.EmployeeId)
                 .HasConstraintName("FK_PerformanceReviewEvalutation_ToEmployee");
 
+            entity.HasOne(d => d.PerformanceReviewForm)
+                .WithMany(p => p.PerformanceReviewEvalutations)
+                .HasForeignKey(d => d.PerformanceReviewFormId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PerformanceReviewEvalutation_ToPerformanceReviewForm");
+
             entity.HasOne(d => d.User)
                 .WithMany(p => p.PerformanceReviewEvalutations)
                 .HasForeignKey(d => d.UserId)

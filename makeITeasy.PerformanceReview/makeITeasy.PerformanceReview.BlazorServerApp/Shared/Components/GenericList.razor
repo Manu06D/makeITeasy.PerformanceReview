@@ -1,8 +1,9 @@
 ﻿@using makeITeasy.AppFramework.Models
 @typeparam TItem where TItem : class, IBaseEntity
+@typeparam TViewItem where TViewItem:class
 @typeparam TQuery where TQuery:BaseTransactionQuery<TItem>, new()
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<TItem>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table">
+<MudTable ServerData="@(new Func<TableState, Task<TableData<TViewItem>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" Loading=true>
     <ToolBarContent>
         <MudText Typo="Typo.h6">@Title</MudText>
         <MudSpacer />
@@ -44,9 +45,9 @@
     public RenderFragment HeaderContent { get; set; }
 
     [Parameter]
-    public RenderFragment<TItem> RowTemplate { get; set; }
+    public RenderFragment<TViewItem> RowTemplate { get; set; }
 
-    private MudTable<TItem> table;
+    private MudTable<TViewItem> table;
     private string searchString = null;
 
     protected override async Task OnInitializedAsync()
@@ -64,7 +65,7 @@
         table.ReloadServerData();
     }
 
-    private async Task<TableData<TItem>> ServerReload(TableState state)
+    private async Task<TableData<TViewItem>> ServerReload(TableState state)
     {
         TQuery query = new ();
         //query.Name = searchString;
@@ -77,9 +78,9 @@
 
         query.AddOrder(order);
 
-        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<TItem>(query, true));
+        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryWithProjectCommand<TItem, TViewItem>(query, true));
 
-        return new TableData<TItem>() { TotalItems = results.TotalItems, Items = results.Results };
+        return new TableData<TViewItem>() { TotalItems = results.TotalItems, Items = results.Results };
     }
 
     private void Edit(int id)

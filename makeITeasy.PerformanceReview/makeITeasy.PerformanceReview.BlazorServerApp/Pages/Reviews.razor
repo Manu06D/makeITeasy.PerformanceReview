@@ -6,20 +6,21 @@
 @using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
 @using makeITeasy.PerformanceReview.Models
 
-<GenericList TItem=PerformanceReviewEvalutation TQuery=BasicPerformanceReviewEvalutationQuery Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table">
+<GenericList TItem=PerformanceReviewEvalutation TViewItem=PerformanceReviewEvalutationViewModel TQuery=BasicPerformanceReviewEvalutationQuery 
+            Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table">
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="PerformanceReviewEvalutation" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Name" T="PerformanceReviewEvalutation">EmployeId</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Name" T="PerformanceReviewEvalutation">PerformanceReviewId</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="PerformanceReviewEvalutationViewModel" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Employee.LastName" T="PerformanceReviewEvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="PerformanceReviewForm.Name" T="PerformanceReviewEvalutationViewModel">PerformanceReviewFormName</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.EmployeeId</MudTd>
-        <MudTd DataLabel="Name">@context.PerformanceReviewId</MudTd>
+        <MudTd DataLabel="Name">@context.EmployeeName</MudTd>
+        <MudTd DataLabel="Name">@context.PerformanceReviewFormName</MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>
+            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>*@
         </MudTd>
     </RowTemplate>
 </GenericList>
@@ -29,10 +30,10 @@
     public class PerformanceReviewEvalutationViewModel : IMapFrom<PerformanceReviewEvalutation>
     {
         public int Id { get; set; }
-        public string PerformanceReviewFormName { get; set; }
-        public string EmployeeName { get; set; }
+        public string? PerformanceReviewFormName { get; set; }
+        public string? EmployeeName { get; set; }
 
-        void Mapping(AutoMapper.Profile profile)
+        public void Mapping(AutoMapper.Profile profile)
         {
             if (profile != null)
             {
@@ -53,7 +54,7 @@
     [Inject]
     private MediatR.IMediator _mediator { get; set; }
 
-    private GenericList<PerformanceReviewEvalutation, BasicPerformanceReviewEvalutationQuery> table;
+    private GenericList<PerformanceReviewEvalutation, PerformanceReviewEvalutationViewModel, BasicPerformanceReviewEvalutationQuery> table;
 
     private async Task CreateNewAsync()
     {
