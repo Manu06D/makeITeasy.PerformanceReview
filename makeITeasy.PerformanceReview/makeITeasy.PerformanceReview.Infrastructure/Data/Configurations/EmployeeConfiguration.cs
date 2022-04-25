@@ -2,6 +2,8 @@
 using makeITeasy.PerformanceReview.Infrastructure;
 using makeITeasy.PerformanceReview.Infrastructure.Data;
 using makeITeasy.PerformanceReview.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

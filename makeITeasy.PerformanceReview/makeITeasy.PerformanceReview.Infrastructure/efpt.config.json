@@ -18,10 +18,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewCategory]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[PerformanceReviewEvaluationItem]",
          "ObjectType": 0
       },
@@ -35,10 +31,6 @@
       },
       {
          "Name": "[dbo].[PerformanceReviewItem]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[User]",
          "ObjectType": 0
       }
    ],

@@ -2,6 +2,8 @@
 using makeITeasy.PerformanceReview.Infrastructure;
 using makeITeasy.PerformanceReview.Infrastructure.Data;
 using makeITeasy.PerformanceReview.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,8 +18,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("PerformanceReviewItem");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -26,12 +26,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(512)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.IdNavigation)
-                .WithOne(p => p.PerformanceReviewItem)
-                .HasForeignKey<PerformanceReviewItem>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PerformanceReviewItem_ToEmployee");
 
             entity.HasOne(d => d.PerformanceReview)
                 .WithMany(p => p.PerformanceReviewItems)

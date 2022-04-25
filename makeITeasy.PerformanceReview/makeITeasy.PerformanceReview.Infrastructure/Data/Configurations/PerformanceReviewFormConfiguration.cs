@@ -2,6 +2,8 @@
 using makeITeasy.PerformanceReview.Infrastructure;
 using makeITeasy.PerformanceReview.Infrastructure.Data;
 using makeITeasy.PerformanceReview.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -20,12 +22,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.User)
-                .WithMany(p => p.PerformanceReviewForms)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PerformanceReview_ToUser");
 
             OnConfigurePartial(entity);
         }

@@ -20,7 +20,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Startup
         {
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-            Assembly modelAssembly = typeof(UserService).Assembly;
+            Assembly modelAssembly = typeof(EmployeeService).Assembly;
             Assembly[] assembliesToScan = new Assembly[]
                 {
                     makeITeasy.AppFramework.Core.AppFrameworkCore.Assembly,

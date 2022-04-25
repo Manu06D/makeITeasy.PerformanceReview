@@ -2,22 +2,22 @@
 
 namespace {{namespace}}
 {
-    public partial class {{class}} : DbContext
+    public partial class {{class}} : IdentityDbContext<IdentityUser>
     {
-{{{> dbsets}}}
-{{#if entity-type-errors}}
-{{#each entity-type-errors}}
-        {{{entity-type-error}}}
-{{/each}}
+    {{{> dbsets}}}
+    {{#if entity-type-errors}}
+    {{#each entity-type-errors}}
+    {{{entity-type-error}}}
+    {{/each}}
 
-{{/if}}
+    {{/if}}
 
-{{{> dbconstructor}}}
+    {{{> dbconstructor}}}
 
-{{#unless suppress-on-configuring}}
-{{{> dbonconfiguring}}}
+    {{#unless suppress-on-configuring}}
+    {{{> dbonconfiguring}}}
 
-{{/unless}}
-{{{on-model-creating}}}
+    {{/unless}}
+    {{{on-model-creating}}}
     }
-}
+    }

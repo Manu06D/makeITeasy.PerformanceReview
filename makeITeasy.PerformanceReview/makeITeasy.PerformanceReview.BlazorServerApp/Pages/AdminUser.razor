@@ -1,0 +1,74 @@
+﻿@page "/admin/users"
+@using System.ComponentModel.DataAnnotations
+@attribute [Authorize(Roles = "admin")]
+
+<h3>User Admin Page</h3>
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="First name" HelperText="Max. 8 characters" @bind-Value="model.Username" For="@(() => model.Username)" />
+                    <MudTextField Label="Email" Class="mt-3" @bind-Value="model.Email" For="@(() => model.Email)" />
+                    <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3" @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
+                    <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3" @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Register">Register</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@code {
+    public class RegisterAccountForm
+    {
+        [Required]
+        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
+        public string Username { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare(nameof(Password))]
+        public string Password2 { get; set; }
+    }
+
+    [Inject]
+    Infrastructure.Data.PeformanceReviewDbContext dbContext { get; set; }
+
+    RegisterAccountForm model = new RegisterAccountForm();
+
+
+    private void OnValidSubmit(EditContext context)
+    {
+        //StateHasChanged();
+    }
+
+    async Task Register()
+    {
+        dbContext.Users.Add(new Microsoft.AspNetCore.Identity.IdentityUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = model.Username,
+                NormalizedUserName = model.Username.ToUpper(),
+                Email = model.Email,
+                NormalizedEmail = model.Email.ToUpper(),
+                PhoneNumber = "XXXXXXXXXXXXX",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = new Guid().ToString("D"),
+            });
+
+            dbContext.SaveChanges();
+    }
+}

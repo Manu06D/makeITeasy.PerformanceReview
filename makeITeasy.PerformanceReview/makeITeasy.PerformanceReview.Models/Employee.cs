@@ -16,7 +16,6 @@ namespace makeITeasy.PerformanceReview.Models
         public string LastName { get; set; } = null!;
         public string? EmailAddress { get; set; }
 
-        public virtual PerformanceReviewItem PerformanceReviewItem { get; set; } = null!;
         public virtual ICollection<PerformanceReviewEvalutation> PerformanceReviewEvalutations { get; set; }
     }
 }

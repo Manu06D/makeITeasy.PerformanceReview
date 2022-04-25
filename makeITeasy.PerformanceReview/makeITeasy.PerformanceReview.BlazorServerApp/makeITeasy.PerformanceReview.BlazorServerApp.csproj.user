@@ -7,5 +7,8 @@
     <ActiveDebugProfile>makeITeasy.PerformanceReview.BlazorServerApp</ActiveDebugProfile>
     <RazorPage_SelectedScaffolderID>RazorComponentScaffolder</RazorPage_SelectedScaffolderID>
     <RazorPage_SelectedScaffolderCategoryPath>root/Common</RazorPage_SelectedScaffolderCategoryPath>
+    <_SelectedScaffolderID>IdentityScaffolder</_SelectedScaffolderID>
+    <_SelectedScaffolderCategoryPath>root/Identity</_SelectedScaffolderCategoryPath>
+    <WebStackScaffolding_ViewDialogWidth>800</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
 </Project>

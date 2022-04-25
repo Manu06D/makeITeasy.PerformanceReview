@@ -16,7 +16,6 @@ namespace makeITeasy.PerformanceReview.Models
         public string Description { get; set; } = null!;
         public string? Category { get; set; }
 
-        public virtual Employee IdNavigation { get; set; } = null!;
         public virtual PerformanceReviewForm PerformanceReview { get; set; } = null!;
         public virtual ICollection<PerformanceReviewEvaluationItem> PerformanceReviewEvaluationItems { get; set; }
     }
