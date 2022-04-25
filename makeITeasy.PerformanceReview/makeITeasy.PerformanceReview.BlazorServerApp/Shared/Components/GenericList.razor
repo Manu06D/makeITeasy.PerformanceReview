@@ -68,7 +68,10 @@
     private async Task<TableData<TViewItem>> ServerReload(TableState state)
     {
         TQuery query = new ();
+
+        //TODO : implement defaut search
         //query.Name = searchString;
+
         query.Take = state.PageSize;
         query.Skip = state.Page * state.PageSize;
 
@@ -81,16 +84,5 @@
         var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryWithProjectCommand<TItem, TViewItem>(query, true));
 
         return new TableData<TViewItem>() { TotalItems = results.TotalItems, Items = results.Results };
-    }
-
-    private void Edit(int id)
-    {
-        //customer = customers.FirstOrDefault(c => c.Id == id);
-    }
-    private void Delete(int id)
-    {
-        //customerService.DeleteCustomer(id);
-        //snackBar.Add("Customer Deleted.", Severity.Success);
-        //GetCustomers();
     }
 }

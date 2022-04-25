@@ -13,12 +13,11 @@ namespace makeITeasy.PerformanceReview.Models
 
         public int Id { get; set; }
         public int PerformanceReviewId { get; set; }
-        public int PerformanceReviewCategoryId { get; set; }
         public string Description { get; set; } = null!;
+        public string? Category { get; set; }
 
         public virtual Employee IdNavigation { get; set; } = null!;
         public virtual PerformanceReviewForm PerformanceReview { get; set; } = null!;
-        public virtual PerformanceReviewCategory PerformanceReviewCategory { get; set; } = null!;
         public virtual ICollection<PerformanceReviewEvaluationItem> PerformanceReviewEvaluationItems { get; set; }
     }
 }

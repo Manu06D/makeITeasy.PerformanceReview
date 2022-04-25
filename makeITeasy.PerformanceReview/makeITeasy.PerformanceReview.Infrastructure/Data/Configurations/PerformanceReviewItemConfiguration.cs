@@ -18,6 +18,10 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+            entity.Property(e => e.Category)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
             entity.Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(512)
@@ -28,12 +32,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .HasForeignKey<PerformanceReviewItem>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewItem_ToEmployee");
-
-            entity.HasOne(d => d.PerformanceReviewCategory)
-                .WithMany(p => p.PerformanceReviewItems)
-                .HasForeignKey(d => d.PerformanceReviewCategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PerformanceReviewQuestion_ToPerformanceReviewCategory");
 
             entity.HasOne(d => d.PerformanceReview)
                 .WithMany(p => p.PerformanceReviewItems)
