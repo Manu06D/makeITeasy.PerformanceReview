@@ -18,19 +18,16 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.ToTable("Employee");
 
-            entity.Property(e => e.EmailAddress)
-                .HasMaxLength(500)
-                .IsUnicode(false);
+            entity.Property(e => e.ManagerId)
+                .IsRequired()
+                .HasMaxLength(450);
 
-            entity.Property(e => e.FirstName)
+            entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.Property(e => e.LastName)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.UserIdentityId).HasMaxLength(450);
 
             OnConfigurePartial(entity);
         }

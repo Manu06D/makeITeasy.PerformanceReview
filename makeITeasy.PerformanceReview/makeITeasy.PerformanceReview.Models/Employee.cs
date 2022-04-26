@@ -12,9 +12,9 @@ namespace makeITeasy.PerformanceReview.Models
         }
 
         public int Id { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public string? EmailAddress { get; set; }
+        public string Name { get; set; } = null!;
+        public string ManagerId { get; set; } = null!;
+        public string? UserIdentityId { get; set; }
 
         public virtual ICollection<PerformanceReviewEvalutation> PerformanceReviewEvalutations { get; set; }
     }

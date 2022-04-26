@@ -19,7 +19,21 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 //Authentification
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<PeformanceReviewDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+    { 
+        options.User.RequireUniqueEmail = true;
+        options.SignIn.RequireConfirmedAccount = false;
+
+        if (builder.Environment.IsDevelopment())
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 1;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+        }
+    })
+    .AddRoles<IdentityRole>().AddEntityFrameworkStores<PeformanceReviewDbContext>();
 builder.Services.AddScoped<AuthenticationStateProvider, makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 ////MakeItEasy

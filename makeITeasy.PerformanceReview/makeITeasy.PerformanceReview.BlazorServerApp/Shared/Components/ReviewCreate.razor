@@ -10,7 +10,7 @@
             <MudSelect T="Employee" Label="Employee" AnchorOrigin="Origin.BottomCenter" Clearable="true" Required="true"  @bind-Value="selectedEmployee">
                 @foreach (Employee employee in employees)
                 {
-                    <MudSelectItem Value="@employee">@employee.LastName @employee.FirstName</MudSelectItem>
+                    <MudSelectItem Value="@employee">@employee.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudItem>

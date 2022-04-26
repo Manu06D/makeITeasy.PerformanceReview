@@ -1,8 +1,6 @@
 using makeITeasy.PerformanceReview.Infrastructure.Data;
-using makeITeasy.PerformanceReview.Models;
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -54,7 +52,6 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
                 IdentityUserRole<string> adminUserRole = new IdentityUserRole<string>() { RoleId = adminRole.Id, UserId = userId };
 
                 _dbContext.UserRoles.Add(adminUserRole);
-
             }
             _dbContext.SaveChanges();
 
