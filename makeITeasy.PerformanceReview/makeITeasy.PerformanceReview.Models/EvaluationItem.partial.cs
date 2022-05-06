@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using makeITeasy.AppFramework.Models;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public partial class EvaluationItem
+    public partial class EvaluationItem : ITimeTrackingEntity
     {
         public object DatabaseID => Id;
     }

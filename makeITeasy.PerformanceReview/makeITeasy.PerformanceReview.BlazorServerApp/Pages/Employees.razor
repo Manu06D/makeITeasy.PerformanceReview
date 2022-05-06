@@ -1,4 +1,4 @@
-﻿@page "/ressources"
+﻿@page "/employees"
 
 @using Microsoft.AspNetCore.Identity
 @using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
@@ -10,11 +10,12 @@
              Title="Employees N-1" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="Id" T="Evaluation" InitialDirection="SortDirection.Ascending">Name</MudTableSortLabel></MudTh>
-        @*<MudTh><MudTableSortLabel SortLabel="Name" T="PerformanceReviewEvalutation">EmployeeName</MudTableSortLabel></MudTh>*@
+        @*<MudTh><MudTableSortLabel SortLabel="Name" T="Evaluation">Email</MudTableSortLabel></MudTh>*@
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
+        @*<MudTd DataLabel="Name">@context.Email</MudTd>*@
         <MudTd>
             @*<MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>*@
             @*<MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>*@

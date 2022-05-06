@@ -34,11 +34,15 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
             public string? Email { get; set; }
 
+            //public DateTime? LastReviewed { get; set; }
+
             //public void Mapping(AutoMapper.Profile profile)
             //{
             //    if (profile != null)
             //    {
-            //        profile.CreateMap<IdentityUser, EmployeeViewModel>().ForMember(d => d.Email, opt => opt.MapFrom(new CustomResolver()));
+            //        profile.CreateMap<IdentityUser, EmployeeViewModel>()
+            //            //.ForMember(d => d.Email, opt => opt.MapFrom(new CustomResolver()));
+            //            //.ForMember(d => d.LastReviewed, opt => opt.MapFrom(src => src.I))
             //    }
             //}
 
@@ -75,9 +79,10 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
         private async Task CreateNewAsync()
         {
-            var dialog = DialogService?.Show<AssignEmployee>("Assigning Employee", new DialogOptions()
-            {CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false});
+            var dialog = DialogService?.Show<EmployeeAssignment>(String.Empty,
+                                                             new DialogOptions() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false });
             var result = await dialog.Result;
+
             if (!result.Cancelled)
             {
                 int.TryParse(result.Data.ToString(), out int createdReview);

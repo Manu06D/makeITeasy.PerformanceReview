@@ -2,19 +2,29 @@
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<UserViewModel>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" Loading=false>
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Manage ressources</MudText>
+        <MudText Typo="Typo.h6">Employee Assignment</MudText>
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Email</MudTableSortLabel></MudTh>
-        <MudTh></MudTh>
+        <MudTh>Enroll</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Email</MudTd>
         <MudTd DataLabel="">
-            <MudIconButton Icon="@Icons.Material.Filled.Assignment" aria-label="delete" @onclick="@(()=>AssignToCurrentUser(@context.Id))" Color="Color.Primary"></MudIconButton>
+            <EditForm Model="@context" OnValidSubmit="OnValidSubmit" Context="innerContext">
+                <DataAnnotationsValidator/>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="string" Label="Name" Required="true" RequiredError="User name is required!" @bind-Value="context.Name" For="@(() => context.Name)"/>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudIconButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" Icon="@Icons.Filled.PersonAddAlt1"></MudIconButton>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
         </MudTd>
     </RowTemplate>
     <PagerContent>

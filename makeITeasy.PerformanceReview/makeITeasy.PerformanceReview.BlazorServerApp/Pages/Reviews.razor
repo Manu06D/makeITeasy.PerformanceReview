@@ -7,18 +7,18 @@
 @using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
 @using makeITeasy.PerformanceReview.Models
 
-<GenericList TItem=Evaluation TViewItem=PerformanceReviewEvalutationViewModel TQuery=ManagerOrEmployeePerformanceReviewEvaluationQuery 
+<GenericList TItem=Evaluation TViewItem=EvalutationViewModel TQuery=ManagerOrEmployeePerformanceReviewEvaluationQuery 
             Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="PerformanceReviewEvalutationViewModel" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Employee.LastName" T="PerformanceReviewEvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="PerformanceReviewForm.Name" T="PerformanceReviewEvalutationViewModel">PerformanceReviewFormName</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="EvalutationViewModel" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Employee.LastName" T="EvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="PerformanceReviewForm.CreationDate" T="EvalutationViewModel">Creation Date</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.UserIdentityName</MudTd>
-        <MudTd DataLabel="Name">@context.PerformanceReviewFormName</MudTd>
+        <MudTd DataLabel="Name">@context.CreationDate?.ToString("dd MMM yyyy hh:mm")</MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>
             @*<MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>*@

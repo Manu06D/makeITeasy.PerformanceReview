@@ -4,7 +4,7 @@ using makeITeasy.AppFramework.Models;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public partial class Evaluation
+    public partial class Evaluation : ITimeTrackingEntity
     {
         public object DatabaseID => Id;
     }

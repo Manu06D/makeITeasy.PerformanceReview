@@ -20,12 +20,11 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 
             entity.ToTable("Employee");
 
-            entity.HasIndex(e => e.ManagerIdentityId, "AK_Employee_Column")
-                .IsUnique();
-
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-            entity.Property(e => e.ManagerIdentityId).IsRequired();
+            entity.Property(e => e.ManagerIdentityId)
+                .IsRequired()
+                .HasMaxLength(450);
 
             entity.Property(e => e.Name)
                 .IsRequired()

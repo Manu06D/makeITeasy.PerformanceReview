@@ -120,6 +120,8 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, Modules.Security.Role.Employee.ToString());
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

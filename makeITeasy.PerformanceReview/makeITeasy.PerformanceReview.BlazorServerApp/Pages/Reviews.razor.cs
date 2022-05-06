@@ -14,11 +14,11 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
     [Authorize(Roles = "admin,manager")]
     public partial class Reviews
     {
-        public class PerformanceReviewEvalutationViewModel : IMapFrom<Evaluation>
+        public class EvalutationViewModel : IMapFrom<Evaluation>
         {
             public int Id { get; set; }
 
-            public string? PerformanceReviewFormName { get; set; }
+            public DateTime? CreationDate { get; set; }
 
             public string? UserIdentityName { get; set; }
 
@@ -26,7 +26,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             {
                 if (profile != null)
                 {
-                    profile.CreateMap<Evaluation, PerformanceReviewEvalutationViewModel>();
+                    profile.CreateMap<Evaluation, EvalutationViewModel>();
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         [Inject]
         private MediatR.IMediator? _mediator { get; set; }
 
-        private GenericList<Evaluation, PerformanceReviewEvalutationViewModel, ManagerOrEmployeePerformanceReviewEvaluationQuery>? table;
+        private GenericList<Evaluation, EvalutationViewModel, ManagerOrEmployeePerformanceReviewEvaluationQuery>? table;
         private ManagerOrEmployeePerformanceReviewEvaluationQuery? defaultQuery;
 
         private DialogOptions defaultDialogOptions = new() {CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false};
