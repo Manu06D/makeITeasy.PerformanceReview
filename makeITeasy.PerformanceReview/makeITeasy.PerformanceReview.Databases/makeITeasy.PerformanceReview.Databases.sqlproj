@@ -61,11 +61,10 @@
     <Folder Include="feed" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="UserXXXX.sql" />
-    <Build Include="PerformanceReviewForm.sql" />
-    <Build Include="PerformanceReviewItem.sql" />
-    <Build Include="PerformanceReviewEvalutation.sql" />
-    <Build Include="PerformanceReviewEvaluationItem.sql" />
+    <Build Include="Form.sql" />
+    <Build Include="FormItem.sql" />
+    <Build Include="Evaluation.sql" />
+    <Build Include="EvaluationItem.sql" />
     <Build Include="Employee.sql" />
     <Build Include="dbo\Tables\AspNetUserTokens.sql" />
     <Build Include="dbo\Tables\AspNetUsers.sql" />

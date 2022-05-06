@@ -3,7 +3,7 @@ using makeITeasy.PerformanceReview.Models;
 
 namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
 {
-    public class EditPerformanceReviewEvalutationQuery : BaseTransactionQuery<PerformanceReviewEvalutation>
+    public class EditPerformanceReviewEvalutationQuery : BaseTransactionQuery<Evaluation>
     {
         private readonly int id;
 
@@ -15,9 +15,9 @@ namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEva
         public override void BuildQuery()
         {
             AddFunctionToCriteria(x => x.Id == id);
-            AddInclude(x => x.Employee);
-            AddInclude(x => x.PerformanceReviewForm.PerformanceReviewItems);
-            AddInclude(x => x.PerformanceReviewEvaluationItems);
+            AddInclude(x => x.UserIdentity);
+            AddInclude(x => x.Form.FormItems);
+            AddInclude(x => x.EvaluationItems);
         }
     }
 }

@@ -12,11 +12,11 @@ using System.Collections.Generic;
 
 namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 {
-    public partial class PerformanceReviewItemConfiguration : IEntityTypeConfiguration<PerformanceReviewItem>
+    public partial class FormItemConfiguration : IEntityTypeConfiguration<FormItem>
     {
-        public void Configure(EntityTypeBuilder<PerformanceReviewItem> entity)
+        public void Configure(EntityTypeBuilder<FormItem> entity)
         {
-            entity.ToTable("PerformanceReviewItem");
+            entity.ToTable("FormItem");
 
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
@@ -27,15 +27,15 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .HasMaxLength(512)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.PerformanceReview)
-                .WithMany(p => p.PerformanceReviewItems)
-                .HasForeignKey(d => d.PerformanceReviewId)
+            entity.HasOne(d => d.Form)
+                .WithMany(p => p.FormItems)
+                .HasForeignKey(d => d.FormId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewQuestion_ToPerformanceReview");
 
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<PerformanceReviewItem> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<FormItem> entity);
     }
 }

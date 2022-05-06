@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewFormQueries
 {
-    public class BasicPerformanceReviewFormQuery : BaseTransactionQuery<PerformanceReviewForm>
+    public class BasicPerformanceReviewFormQuery : BaseTransactionQuery<Form>
     {
         public int? ID { get; set; }
         public string Name { get; set; }

@@ -3,11 +3,11 @@
 @typeparam TViewItem where TViewItem:class
 @typeparam TQuery where TQuery:BaseTransactionQuery<TItem>, new()
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<TViewItem>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" Loading=true>
+<MudTable ServerData="@(new Func<TableState, Task<TableData<TViewItem>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" Loading=false>
     <ToolBarContent>
         <MudText Typo="Typo.h6">@Title</MudText>
         <MudSpacer />
-        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField T="string" ValueChanged="@(s=>OnSearchAsync(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
         <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" OnClick="CreateNewHandler"/>
     </ToolBarContent>
@@ -47,41 +47,48 @@
     [Parameter]
     public RenderFragment<TViewItem> RowTemplate { get; set; }
 
+    [Parameter]
+    public TQuery Query { get; set; }
+
     private MudTable<TViewItem> table;
     private string searchString = null;
+
 
     protected override async Task OnInitializedAsync()
     {
     }
 
-    private void OnSearch(string text)
+    private async Task OnSearchAsync(string text)
     {
         searchString = text;
-        ReloadTable();
+        await ReloadTableAsync();
     }
 
-    public void ReloadTable()
+    public async Task ReloadTableAsync()
     {
-        table.ReloadServerData();
+        await table.ReloadServerData();
     }
 
     private async Task<TableData<TViewItem>> ServerReload(TableState state)
     {
-        TQuery query = new ();
+        if(Query == null)
+        {
+            Query = new ();           
+        }
 
         //TODO : implement defaut search
         //query.Name = searchString;
 
-        query.Take = state.PageSize;
-        query.Skip = state.Page * state.PageSize;
+        Query.Take = state.PageSize;
+        Query.Skip = state.Page * state.PageSize;
 
         var order = new AppFramework.Models.OrderBySpecification<string>(
             string.IsNullOrWhiteSpace(state.SortLabel) ? DefaultSortColumn : state.SortLabel,
             state.SortDirection == SortDirection.Descending);
 
-        query.AddOrder(order);
+        Query.AddOrder(order);
 
-        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryWithProjectCommand<TItem, TViewItem>(query, true));
+        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryWithProjectCommand<TItem, TViewItem>(Query, true));
 
         return new TableData<TViewItem>() { TotalItems = results.TotalItems, Items = results.Results };
     }

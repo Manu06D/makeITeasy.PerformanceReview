@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace makeITeasy.PerformanceReview.BusinessCore.Services
 {
-    public class PerformanceReviewFormService : BaseEntityService<PerformanceReviewForm>,  IPerformanceReviewFormService
+    public class FormService : BaseEntityService<Form>, IFormService
     {
     }
 
-    public interface IPerformanceReviewFormService : IBaseEntityService<PerformanceReviewForm>
+    public interface IFormService : IBaseEntityService<Form>
     {
     }
 }

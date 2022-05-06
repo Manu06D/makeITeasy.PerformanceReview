@@ -1,8 +1,11 @@
 ﻿@page "/"
 @namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
+
 @{
     Layout = "_Layout";
+    var token = antiforgeryProvider.GetAndStoreTokens(HttpContext).RequestToken;
 }
 
-<component type="typeof(App)" render-mode="ServerPrerendered" />
+<component type="typeof(App)" render-mode="ServerPrerendered" param-AntiforgeryToken="token"/>

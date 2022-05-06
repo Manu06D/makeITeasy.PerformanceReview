@@ -1,0 +1,48 @@
+﻿@page "/admin/users"
+@attribute [Authorize(Roles = "admin")]
+
+@using AutoMapper;
+@using Microsoft.AspNetCore.Identity
+@using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<UserViewModel>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" 
+    CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Manage users</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudSpacer />
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" OnClick="CreateNewAsync" />
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Email</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Roles</MudTableSortLabel></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Email</MudTd>
+        <MudTd DataLabel="Name">@context.Role</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Sign">
+            <MudTextField @bind-Value="@context.Email" Required />
+        </MudTd>
+        <MudTd DataLabel="Sign">
+            <MudSelect T="string" Label="Roles" @bind-Value="context.Role">
+                @foreach (var role in dbRoles)
+                {
+                    <MudSelectItem T="string" Value="@role.Name">@role.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudTd>
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{5, 50, 100}" />
+    </PagerContent>
+    <NoRecordsContent>
+        <MudText>No matching records found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+</MudTable>

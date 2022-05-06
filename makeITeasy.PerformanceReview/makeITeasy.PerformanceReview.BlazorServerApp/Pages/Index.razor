@@ -1,7 +1,20 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<style>
+    .mud-alert-message a {
+        text-decoration: underline;
+    }
+</style>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
-<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+<PageTitle>Welcome</PageTitle>
+
+<AuthorizeView>
+    <Authorized>    
+        Welcome back
+    </Authorized>
+    <NotAuthorized>
+
+        <MudText Typo="Typo.h3" GutterBottom="true">Perf. Review Tool</MudText>
+        <MudAlert Severity="Severity.Normal">You have to <a href="Identity/Account/Register">register</a> or <a href="Identity/Account/Login">Log in</a>. When done, your manager will able to add you into his ressources list.</MudAlert>
+    </NotAuthorized>
+</AuthorizeView>

@@ -1,34 +1,23 @@
-﻿@page "/employees"
+﻿@page "/ressources"
+
+@using Microsoft.AspNetCore.Identity
 @using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 @using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries
 @using makeITeasy.PerformanceReview.Models
+@using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
 
-@*<GenericList TItem=Employee TQuery=BasicEmployeeQuery Title="List of Employee">
+<GenericList TItem=Employee TViewItem=EmployeeViewModel TQuery=BasicEmployeeQuery
+             Title="Employees N-1" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="Employee" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Name" T="Employee">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="Evaluation" InitialDirection="SortDirection.Ascending">Name</MudTableSortLabel></MudTh>
+        @*<MudTh><MudTableSortLabel SortLabel="Name" T="PerformanceReviewEvalutation">EmployeeName</MudTableSortLabel></MudTh>*@
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.LastName</MudTd>
-        <MudTd DataLabel="">
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>Delete(@context.Id))" Color="Color.Secondary"></MudIconButton>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd>
+            @*<MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>*@
+            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>*@
         </MudTd>
     </RowTemplate>
 </GenericList>
-
-@code {
-        private void Edit(int id)
-    {
-        //customer = customers.FirstOrDefault(c => c.Id == id);
-    }
-    private void Delete(int id)
-    {
-        //customerService.DeleteCustomer(id);
-        //snackBar.Add("Customer Deleted.", Severity.Success);
-        //GetCustomers();
-    }
-}
-*@

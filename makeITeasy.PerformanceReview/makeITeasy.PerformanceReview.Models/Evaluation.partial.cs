@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using makeITeasy.AppFramework.Models;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public partial class PerformanceReviewItem
+    public partial class Evaluation
     {
         public object DatabaseID => Id;
     }

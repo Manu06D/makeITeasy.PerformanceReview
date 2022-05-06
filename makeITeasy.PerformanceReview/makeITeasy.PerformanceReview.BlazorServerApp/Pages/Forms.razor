@@ -6,7 +6,7 @@
 
 <PageTitle>Counter</PageTitle>
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<PerformanceReviewForm>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table">
+<MudTable ServerData="@(new Func<TableState, Task<TableData<Form>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Forms</MudText>
         <MudSpacer />
@@ -15,8 +15,8 @@
         <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" />
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="PerformanceReviewForm" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Name" T="PerformanceReviewForm">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="Form" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Name" T="Form">Name</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
@@ -42,7 +42,7 @@
     [Inject]
     private IMediator _mediator { get; set; }
 
-    private MudTable<PerformanceReviewForm> table;
+    private MudTable<Form> table;
     private string searchString = null;
 
     protected override async Task OnInitializedAsync()
@@ -56,7 +56,7 @@
         table.ReloadServerData();
     }
 
-    private async Task<TableData<PerformanceReviewForm>> ServerReload(TableState state)
+    private async Task<TableData<Form>> ServerReload(TableState state)
     {
         var query = new BasicPerformanceReviewFormQuery();
         query.Name = searchString;
@@ -64,14 +64,14 @@
         query.Skip = state.Page * state.PageSize;
 
         var order = new AppFramework.Models.OrderBySpecification<string>(
-            string.IsNullOrWhiteSpace(state.SortLabel) ? nameof(PerformanceReviewForm.Id) : state.SortLabel,
+            string.IsNullOrWhiteSpace(state.SortLabel) ? nameof(Form.Id) : state.SortLabel,
             state.SortDirection == SortDirection.Descending);
 
         query.AddOrder(order);
 
-        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<PerformanceReviewForm>(query, true));
+        var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Form>(query, true));
 
-        return new TableData<PerformanceReviewForm>() { TotalItems = results.TotalItems, Items = results.Results };
+        return new TableData<Form>() { TotalItems = results.TotalItems, Items = results.Results };
     }
 
     private void Edit(int id)

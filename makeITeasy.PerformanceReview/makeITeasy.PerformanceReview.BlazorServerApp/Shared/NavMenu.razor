@@ -1,10 +1,14 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="employees" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">Employees</MudNavLink>
-    <MudNavLink Href="forms" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Forms</MudNavLink>
-    <MudNavLink Href="reviews" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Reviews</MudNavLink>
+
+
+    <AuthorizeView Roles="manager">
+        <MudNavLink Href="ressources" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.SupervisedUserCircle">My Ressources</MudNavLink>
+        <MudNavLink Href="forms" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Forms</MudNavLink>
+        <MudNavLink Href="reviews" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.RateReview">Reviews</MudNavLink>
+    </AuthorizeView>
 
     <AuthorizeView Roles="admin">
-    <MudNavLink Href="admin/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Manage Users</MudNavLink>
-</AuthorizeView>
+        <MudNavLink Href="admin/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Manage Users</MudNavLink>
+    </AuthorizeView>
 </MudNavMenu>

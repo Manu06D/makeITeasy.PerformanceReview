@@ -12,11 +12,11 @@ using System.Collections.Generic;
 
 namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 {
-    public partial class PerformanceReviewFormConfiguration : IEntityTypeConfiguration<PerformanceReviewForm>
+    public partial class FormConfiguration : IEntityTypeConfiguration<Form>
     {
-        public void Configure(EntityTypeBuilder<PerformanceReviewForm> entity)
+        public void Configure(EntityTypeBuilder<Form> entity)
         {
-            entity.ToTable("PerformanceReviewForm");
+            entity.ToTable("Form");
 
             entity.Property(e => e.Name)
                 .IsRequired()
@@ -26,6 +26,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<PerformanceReviewForm> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<Form> entity);
     }
 }

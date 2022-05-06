@@ -1,7 +1,6 @@
 ﻿@using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
 @using makeITeasy.PerformanceReview.Models
 
-<h3>ReviewEdit : @Id </h3>
 <style>
     .mud-table-cell-custom-group {
         font-weight: 500;
@@ -12,82 +11,49 @@
         text-align: right;
     }
 </style>
-@if (evalution != null)
-{
 
+@if (evaluation != null)
+{
     <MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
-          Items="@evalution.PerformanceReviewForm.PerformanceReviewItems"
-          T=PerformanceReviewItem
+          Items="@evaluation.Form.FormItems"
+          T=FormItem
           GroupBy="@_groupDefinition"
           GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
           GroupFooterClass="mb-4">
         <ColGroup>
-
             <col style="width: 60px;" />
             <col />
             <col />
             <col />
-            <col />
-            <col />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>Nr</MudTh>
-        <MudTh>Sign</MudTh>
-        <MudTh>Name</MudTh>
-        <MudTh>Position</MudTh>
-        <MudTh>Molar mass</MudTh>
-    </HeaderContent>
-    <GroupHeaderTemplate>
-        <MudTh Class="mud-table-cell-custom-group" colspan="5">-- @($"{context.GroupName}: {context.Key}")</MudTh>
-    </GroupHeaderTemplate>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Description</MudTd>
-        <MudTd DataLabel="Sign">@context.Id</MudTd>
-        <MudTd DataLabel="Name"></MudTd>
-        <MudTd DataLabel="Position">@context.Category</MudTd>
-        <MudTd Style="text-align: right" DataLabel="Molar mass"></MudTd>
-    </RowTemplate>
-    <GroupFooterTemplate>
-        <MudTh Class="mud-table-cell-custom-group mud-table-cell-custom-group-footer" colspan="5">@*Total Mass: @context.Items.Sum((e) => e.Molar)*@</MudTh>
-    </GroupFooterTemplate>
-</MudTable>
+        </ColGroup>
+        <HeaderContent>
+            <MudTh>Question</MudTh>
+            <MudTh>Manager</MudTh>
+            <MudTh>Employee</MudTh>
+        </HeaderContent>
+        <GroupHeaderTemplate>
+            <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.Key}")</MudTh>
+        </GroupHeaderTemplate>
+        <RowTemplate>
+            <MudTd DataLabel="Description">@context.Description</MudTd>
+            <MudTd DataLabel="Nr">
+                <MudRating Size="Size.Medium"
+                       @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.ManagerIdentityId && x.FormItemId==context.Id).Rating"
+                       ReadOnly="evaluation.ManagerIdentityId != currentIdentityUserID"></MudRating>
+            </MudTd>
+            <MudTd DataLabel="Nr">
+                <MudRating Size="Size.Medium"
+                       @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.UserIdentityId && x.FormItemId==context.Id).Rating"
+                       ReadOnly="evaluation.UserIdentityId != currentIdentityUserID"></MudRating>
+            </MudTd>
+            @*            <MudTd DataLabel="Sign">@context.Id</MudTd>
+                <MudTd DataLabel="Name"></MudTd>
+                <MudTd DataLabel="Position">@context.Category</MudTd>
+                <MudTd Style="text-align: right" DataLabel="Molar mass"></MudTd>*@
+        </RowTemplate>
+    </MudTable>
 
-    <p>review for : @evalution?.Employee?.Name</p>
-
-    <p>Evalution Title : @evalution?.PerformanceReviewForm?.Name</p>
-
-    @foreach (var x in @evalution?.PerformanceReviewForm?.PerformanceReviewItems)
-    {
-        <p>@x.Description</p>
-    }
+     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update">Update</MudButton>
 }
 
-@code {
-    [Parameter]
-    public int Id { get; set; }
 
-    [Inject]
-    private MediatR.IMediator _mediator { get; set; }
-
-    private bool loading = false;
-
-    private PerformanceReviewEvalutation evalution;
-
-        private TableGroupDefinition<PerformanceReviewItem> _groupDefinition = new()
-    {
-        GroupName = "Group",
-        Indentation = false,
-        Expandable = true,
-        Selector = (e) => e.Category
-    };
-
-    protected override async Task OnInitializedAsync()
-    {
-        evalution = (await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<PerformanceReviewEvalutation>(new EditPerformanceReviewEvalutationQuery(Id), false))).Results.FirstOrDefault();
-
-        if (evalution == null)
-        {
-            //todo : trigger errors
-        }
-    }
-}

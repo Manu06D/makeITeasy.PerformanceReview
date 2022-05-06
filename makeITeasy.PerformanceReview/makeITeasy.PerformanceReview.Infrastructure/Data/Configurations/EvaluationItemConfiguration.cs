@@ -12,27 +12,31 @@ using System.Collections.Generic;
 
 namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 {
-    public partial class PerformanceReviewEvaluationItemConfiguration : IEntityTypeConfiguration<PerformanceReviewEvaluationItem>
+    public partial class EvaluationItemConfiguration : IEntityTypeConfiguration<EvaluationItem>
     {
-        public void Configure(EntityTypeBuilder<PerformanceReviewEvaluationItem> entity)
+        public void Configure(EntityTypeBuilder<EvaluationItem> entity)
         {
-            entity.ToTable("PerformanceReviewEvaluationItem");
+            entity.ToTable("EvaluationItem");
 
-            entity.HasOne(d => d.PerformanceReviewEvalution)
-                .WithMany(p => p.PerformanceReviewEvaluationItems)
-                .HasForeignKey(d => d.PerformanceReviewEvalutionId)
+            entity.Property(e => e.UserIdentityId)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            entity.HasOne(d => d.Evaluation)
+                .WithMany(p => p.EvaluationItems)
+                .HasForeignKey(d => d.EvaluationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewEvaluationItem_ToPerformanceReviewEvalution");
 
-            entity.HasOne(d => d.PerformanceReviewItem)
-                .WithMany(p => p.PerformanceReviewEvaluationItems)
-                .HasForeignKey(d => d.PerformanceReviewItemId)
+            entity.HasOne(d => d.FormItem)
+                .WithMany(p => p.EvaluationItems)
+                .HasForeignKey(d => d.FormItemId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewEvaluationItem_ToPerformanceReviewItem");
 
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<PerformanceReviewEvaluationItem> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<EvaluationItem> entity);
     }
 }

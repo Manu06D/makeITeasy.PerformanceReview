@@ -4,18 +4,18 @@ using makeITeasy.AppFramework.Models;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public partial class Employee : IBaseEntity
+    public partial class Form : IBaseEntity
     {
-        public Employee()
+        public Form()
         {
             Evaluations = new HashSet<Evaluation>();
+            FormItems = new HashSet<FormItem>();
         }
 
         public int Id { get; set; }
-        public string UserIdentityId { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public string ManagerIdentityId { get; set; } = null!;
 
         public virtual ICollection<Evaluation> Evaluations { get; set; }
+        public virtual ICollection<FormItem> FormItems { get; set; }
     }
 }

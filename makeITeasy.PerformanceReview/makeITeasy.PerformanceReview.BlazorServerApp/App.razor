@@ -20,3 +20,16 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public string? AntiforgeryToken { get; set; }
+    [Inject]
+    private makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security.TokenProvider tokenProvider { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        tokenProvider.AntiforgeryToken = AntiforgeryToken;
+        return base.OnInitializedAsync();
+    }
+}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public partial class PerformanceReviewEvalutation
+    public partial class FormItem
     {
         public object DatabaseID => Id;
     }

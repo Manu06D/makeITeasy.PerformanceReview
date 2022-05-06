@@ -7,9 +7,11 @@ namespace makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries
     {
         public int? ID { get; set; }
 
-        public string ManagerId { get; set; }
-
         public string UserIdentityId { get; set; }
+
+        public List<string> UserIdentitiesId { get; set; }
+
+        public string UserManagerIdentityId { get; set; }
 
         public override void BuildQuery()
         {
@@ -18,14 +20,19 @@ namespace makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries
                 AddFunctionToCriteria(x => x.Id == ID);
             }
             
-            if(!string.IsNullOrEmpty(ManagerId))
-            {
-                AddFunctionToCriteria(x => x.ManagerId == ManagerId);
-            }
-
             if (!string.IsNullOrEmpty(UserIdentityId))
             {
                 AddFunctionToCriteria(x => x.UserIdentityId == UserIdentityId);
+            }
+
+            if (!string.IsNullOrEmpty(UserManagerIdentityId))
+            {
+                AddFunctionToCriteria(x => x.ManagerIdentityId == UserManagerIdentityId);
+            }
+
+            if (UserIdentitiesId?.Count > 0)
+            {
+                AddFunctionToCriteria(x => UserIdentitiesId.Contains(x.UserIdentityId));
             }
         }
     }

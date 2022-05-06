@@ -2,6 +2,6 @@
 {
     public partial class Employee
     {
-        public object DatabaseID => Id;
+        public object DatabaseID => UserIdentityId;
     }
 }

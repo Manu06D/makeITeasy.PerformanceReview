@@ -16,18 +16,21 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Employee> entity)
         {
+            entity.HasKey(e => e.UserIdentityId);
+
             entity.ToTable("Employee");
 
-            entity.Property(e => e.ManagerId)
-                .IsRequired()
-                .HasMaxLength(450);
+            entity.HasIndex(e => e.ManagerIdentityId, "AK_Employee_Column")
+                .IsUnique();
+
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.ManagerIdentityId).IsRequired();
 
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
-
-            entity.Property(e => e.UserIdentityId).HasMaxLength(450);
 
             OnConfigurePartial(entity);
         }

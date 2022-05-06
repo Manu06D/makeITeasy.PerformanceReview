@@ -1,25 +1,40 @@
-﻿<AuthorizeView>
+﻿@using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
+<AuthorizeView>
     <Authorized>
-        <p class="mr-4">Hello, @context?.User?.Identity?.Name</p>
-        
-        @*TODO : Check why 400 on logout*@
+        <p class="mr-4">
+            Hello, @context?.User?.Identity?.Name
+            (@string.Join(',', @context?.User?.GetRoles()))
+        </p>
         <form method="post" action="/Identity/Account/Logout">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
+            <input name="__RequestVerificationToken" type="hidden" value="@tokenProvider?.AntiforgeryToken">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" >Logout</MudButton>
         </form>
-
     </Authorized>
     <NotAuthorized>
-        <a href="Identity/Account/Login">Log in</a>
-        <a href="Identity/Account/Register">Register</a>
+        <MudButton Href="Identity/Account/Login"
+                   Variant="Variant.Filled"
+                   EndIcon="@Icons.Material.Filled.Login"
+                   Color="Color.Primary">
+            Login
+        </MudButton>
+        <MudButton Href="Identity/Account/Register"
+                   Variant="Variant.Filled"
+                   EndIcon="@Icons.Material.Filled.AppRegistration"
+                   Color="Color.Primary">
+            Register
+        </MudButton>
     </NotAuthorized>
 </AuthorizeView>
 
-@code{
+@code {
     [Inject]
-    private NavigationManager Navigation { get; set; }
+    private NavigationManager? Navigation { get; set; }
+
+    [Inject]
+    private Modules.Security.TokenProvider? tokenProvider { get; set; }
 
     private async Task BeginLogout(MouseEventArgs args)
     {
-        Navigation.NavigateTo("/Identity/Account/Logout", true);
+        Navigation?.NavigateTo("/Identity/Account/Logout", true);
     }
-}
+}   

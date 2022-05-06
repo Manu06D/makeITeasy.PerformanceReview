@@ -18,19 +18,19 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewEvaluationItem]",
+         "Name": "[dbo].[Evaluation]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewEvalutation]",
+         "Name": "[dbo].[EvaluationItem]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewForm]",
+         "Name": "[dbo].[Form]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[PerformanceReviewItem]",
+         "Name": "[dbo].[FormItem]",
          "ObjectType": 0
       }
    ],
