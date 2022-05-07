@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using makeITeasy.AppFramework.Core.Commands;
 using makeITeasy.AppFramework.Core.Queries;
-using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries;
 using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewFormQueries;
 using makeITeasy.PerformanceReview.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.UserQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 {
@@ -24,30 +24,36 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         [CascadingParameter]
         MudDialogInstance? MudDialog { get; set; }
 
-        private MudForm? form;
         private bool success;
         private bool _processing = false;
 
-        private IList<Employee> employees = new List<Employee>();
+        private IList<AppUser> users = new List<AppUser>();
         private IList<Form> forms = new List<Form>();
         private Form selectedForm;
-        private Employee selectedEmployee;
+        private AppUser selectedUser;
         private string? currentIdentityUserID;
 
         protected override async Task OnInitializedAsync()
         {
             currentIdentityUserID = (await authenticationStateTask).User.GetIdentityUserID();
 
-            employees = (await _mediator.Send(new GenericQueryCommand<Employee>(new BasicEmployeeQuery() { UserManagerIdentityId = currentIdentityUserID }))).Results;
-            forms = (await _mediator.Send(new GenericQueryCommand<Form>(new BasicPerformanceReviewFormQuery()))).Results;
+            if (_mediator != null)
+            {
+                users = (await _mediator.Send(new GenericQueryCommand<AppUser>(new BasicAppUserQuery() { ManagerIdentityId = currentIdentityUserID }))).Results;
+                forms = (await _mediator.Send(new GenericQueryCommand<Form>(new BasicPerformanceReviewFormQuery()))).Results;
+            }
         }
 
         private async Task Create()
         {
             _processing = true;
 
-            var result = await _mediator.Send(new CreateEntityCommand<Evaluation>(new Evaluation()
-                        {FormId = selectedForm.Id, ManagerIdentityId = currentIdentityUserID, UserIdentityId = selectedEmployee.UserIdentityId }));
+            var result = 
+                await _mediator.Send(new CreateEntityCommand<Evaluation>(
+                    new Evaluation()
+                    { 
+                                FormId = selectedForm.Id, ManagerIdentityId = currentIdentityUserID, UserIdentityId = selectedUser.Id 
+                    }));
 
             if (result.Result == CommandState.Success)
             {

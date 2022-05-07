@@ -6,6 +6,7 @@ using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components;
 using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries;
 using makeITeasy.PerformanceReview.Models;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.UserQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 {
@@ -18,17 +19,17 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         private IDialogService? DialogService { get; set; }
 
         [Inject]
-        private UserManager<IdentityUser>? _userManager { get; set; }
+        private UserManager<AppUser>? _userManager { get; set; }
 
         [Inject]
         ISnackbar? Snackbar { get; set; }
 
-        private GenericList<Employee, EmployeeViewModel, BasicEmployeeQuery>? table;
-        private BasicEmployeeQuery? defaultQuery;
+        private GenericList<AppUser, AppUserViewModel, BasicAppUserQuery>? table;
+        private BasicAppUserQuery? defaultQuery;
 
-        public class EmployeeViewModel : AppFramework.Core.Interfaces.IMapFrom<Employee>
+        public class AppUserViewModel : AppFramework.Core.Interfaces.IMapFrom<AppUser>
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
 
             public string? Name { get; set; }
 
@@ -66,7 +67,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            defaultQuery = new BasicEmployeeQuery() { UserManagerIdentityId = (await authenticationStateTask).User.GetIdentityUserID() };
+            defaultQuery = new BasicAppUserQuery() { ManagerIdentityId = (await authenticationStateTask).User.GetIdentityUserID() };
         }
 
         private void Edit(int id)

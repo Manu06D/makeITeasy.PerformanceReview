@@ -1,13 +1,13 @@
 ﻿using makeITeasy.AppFramework.Models;
 using makeITeasy.PerformanceReview.Models;
 
-namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
+namespace makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries
 {
-    public class EditPerformanceReviewEvalutationQuery : BaseTransactionQuery<Evaluation>
+    public class EditEvalutationQuery : BaseTransactionQuery<Evaluation>
     {
         private readonly int id;
 
-        public EditPerformanceReviewEvalutationQuery(int Id)
+        public EditEvalutationQuery(int Id)
         {
             id = Id;
         }

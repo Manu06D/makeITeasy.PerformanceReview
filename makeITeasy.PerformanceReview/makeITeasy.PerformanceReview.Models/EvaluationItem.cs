@@ -16,5 +16,6 @@ namespace makeITeasy.PerformanceReview.Models
 
         public virtual Evaluation Evaluation { get; set; } = null!;
         public virtual FormItem FormItem { get; set; } = null!;
+        public virtual AppUser UserIdentity { get; set; } = null!;
     }
 }

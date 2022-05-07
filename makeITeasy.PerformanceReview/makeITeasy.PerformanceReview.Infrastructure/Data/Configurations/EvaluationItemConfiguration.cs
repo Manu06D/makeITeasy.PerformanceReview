@@ -34,6 +34,12 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewEvaluationItem_ToPerformanceReviewItem");
 
+            entity.HasOne(d => d.UserIdentity)
+                .WithMany(p => p.EvaluationItems)
+                .HasForeignKey(d => d.UserIdentityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EvaluationItem_ToTable");
+
             OnConfigurePartial(entity);
         }
 

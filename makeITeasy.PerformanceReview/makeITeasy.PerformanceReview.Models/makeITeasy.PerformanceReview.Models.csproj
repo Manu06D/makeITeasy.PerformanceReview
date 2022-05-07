@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="makeITeasy.AppFramework.Models" Version="1.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />	  
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.4" />
   </ItemGroup>
 
 </Project>

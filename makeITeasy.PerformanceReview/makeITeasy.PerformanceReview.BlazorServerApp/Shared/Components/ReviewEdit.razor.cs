@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries;
 using makeITeasy.PerformanceReview.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
-using System.Security.Claims;
 using makeITeasy.AppFramework.Core.Commands;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 {
@@ -15,7 +14,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         private Task<AuthenticationState>? authenticationStateTask { get; set; }
 
         [CascadingParameter] 
-        MudDialogInstance MudDialog { get; set; }
+        MudDialogInstance? MudDialog { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -32,22 +31,23 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         protected override async Task OnInitializedAsync()
         {
             var currentClaims = (await authenticationStateTask).User;
+
             currentIdentityUserID = currentClaims.GetIdentityUserID();
-            currentUserRoles = currentClaims.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+            currentUserRoles = currentClaims.GetRoles();
 
             evaluation = (await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Evaluation>(
-                new EditPerformanceReviewEvalutationQuery(Id), false))).Results.FirstOrDefault();
+                new EditEvalutationQuery(Id), false))).Results.FirstOrDefault();
 
             foreach(var items in evaluation.Form.FormItems)
             {
                 if(! evaluation.EvaluationItems.Any(x => x.FormItemId == items.Id && x.UserIdentityId == evaluation.UserIdentityId))
                 {
-                    evaluation.EvaluationItems.Add(new EvaluationItem() { FormItemId = items.Id, UserIdentityId = evaluation.UserIdentityId, EvaluationId = evaluation.Id, Rating = -1 });
+                    evaluation.EvaluationItems.Add(new EvaluationItem() { FormItemId = items.Id, UserIdentityId = evaluation?.UserIdentityId, EvaluationId = evaluation.Id, Rating = -1 });
                 }
 
                 if (!evaluation.EvaluationItems.Any(x => x.FormItemId == items.Id && x.UserIdentityId == evaluation.ManagerIdentityId))
                 {
-                    evaluation.EvaluationItems.Add(new EvaluationItem() { FormItemId = items.Id, UserIdentityId = evaluation.ManagerIdentityId, EvaluationId = evaluation.Id, Rating = -1 });
+                    evaluation.EvaluationItems.Add(new EvaluationItem() { FormItemId = items.Id, UserIdentityId = evaluation?.ManagerIdentityId, EvaluationId = evaluation.Id, Rating = -1 });
                 }
             }
 
@@ -81,5 +81,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
                 }
             }
         }
-    }
+
+        private async Task Close()
+        { 
+        }
+        }
 }

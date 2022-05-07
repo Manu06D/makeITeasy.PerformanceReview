@@ -4,8 +4,10 @@
     [FormId] INT NOT NULL, 
     [UserIdentityId] NVARCHAR(450) NULL, 
     [ManagerIdentityId] NVARCHAR(450) NULL, 
+    [State] INT NULL, 
     [CreationDate] DATETIME2 NULL, 
     [LastModificationDate] DATETIME2 NULL, 
     CONSTRAINT [FK_Evaluation_ToForm] FOREIGN KEY ([FormId]) REFERENCES [Form]([Id]) ,
-    CONSTRAINT [FK_Evaluation_ToEmployee] FOREIGN KEY ([UserIdentityId]) REFERENCES [Employee]([UserIdentityId])
+    CONSTRAINT [FK_Evaluation_ToEmployee] FOREIGN KEY ([UserIdentityId]) REFERENCES [AppUser]([Id]), 
+    CONSTRAINT [FK_Evaluation_ToTable] FOREIGN KEY ([ManagerIdentityId]) REFERENCES [AppUser]([Id])
 )

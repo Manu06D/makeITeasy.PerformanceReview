@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System;
 using System.Threading.Tasks;
+using makeITeasy.PerformanceReview.Models;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,11 +13,11 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
 
         public PersonalDataModel(
-            UserManager<IdentityUser> userManager,
+            UserManager<AppUser> userManager,
             ILogger<PersonalDataModel> logger)
         {
             _userManager = userManager;

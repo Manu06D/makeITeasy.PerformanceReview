@@ -1,6 +1,9 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
 
+    <AuthorizeView Roles="employee">
+        <MudNavLink Href="reviews" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.RateReview">Reviews</MudNavLink>
+    </AuthorizeView>
 
     <AuthorizeView Roles="manager">
         <MudNavLink Href="employees" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.SupervisedUserCircle">My Employees</MudNavLink>
@@ -11,4 +14,4 @@
     <AuthorizeView Roles="admin">
         <MudNavLink Href="admin/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Manage Users</MudNavLink>
     </AuthorizeView>
-</MudNavMenu>
+</MudNavMenu>   

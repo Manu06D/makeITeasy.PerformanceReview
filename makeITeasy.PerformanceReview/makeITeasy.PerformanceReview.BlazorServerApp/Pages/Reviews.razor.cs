@@ -3,11 +3,11 @@ using MudBlazor;
 using makeITeasy.AppFramework.Core.Commands;
 using makeITeasy.AppFramework.Core.Interfaces;
 using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components;
-using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries;
 using makeITeasy.PerformanceReview.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 {
@@ -43,15 +43,15 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         [Inject]
         private MediatR.IMediator? _mediator { get; set; }
 
-        private GenericList<Evaluation, EvalutationViewModel, ManagerOrEmployeePerformanceReviewEvaluationQuery>? table;
-        private ManagerOrEmployeePerformanceReviewEvaluationQuery? defaultQuery;
+        private GenericList<Evaluation, EvalutationViewModel, ManagerOrEmployeeEvaluationQuery>? table;
+        private ManagerOrEmployeeEvaluationQuery? defaultQuery;
 
         private DialogOptions defaultDialogOptions = new() {CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false};
 
         protected override async Task OnInitializedAsync()
         {
             string? currentIdentityId = (await authenticationStateTask).User.GetIdentityUserID();
-            defaultQuery = new ManagerOrEmployeePerformanceReviewEvaluationQuery() { IdentityId = currentIdentityId,  };
+            defaultQuery = new ManagerOrEmployeeEvaluationQuery() { IdentityId = currentIdentityId,  };
         }
 
         private async Task CreateNewAsync()

@@ -2,7 +2,7 @@
 
 namespace {{namespace}}
 {
-    public partial class {{class}} : IdentityDbContext<IdentityUser>
+    public partial class {{class}} : IdentityDbContext<AppUser>
     {
     {{{> dbsets}}}
     {{#if entity-type-errors}}

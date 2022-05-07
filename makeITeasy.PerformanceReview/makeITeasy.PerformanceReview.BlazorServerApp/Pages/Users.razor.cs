@@ -4,12 +4,13 @@ using MudBlazor;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components;
+using makeITeasy.PerformanceReview.Models;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 {
     public partial class Users
     {
-        public class UserViewModel : AppFramework.Core.Interfaces.IMapFrom<IdentityUser>
+        public class UserViewModel : AppFramework.Core.Interfaces.IMapFrom<AppUser>
         {
             public string? Id { get; set; }
 
@@ -21,16 +22,16 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             {
                 if (profile != null)
                 {
-                    profile.CreateMap<IdentityUser, UserViewModel>().ForMember(d => d.Role, opt => opt.MapFrom(new CustomResolver()));
+                    profile.CreateMap<AppUser, UserViewModel>().ForMember(d => d.Role, opt => opt.MapFrom(new CustomResolver()));
                 }
             }
 
-            public class CustomResolver : AutoMapper.IValueResolver<IdentityUser, UserViewModel, String>
+            public class CustomResolver : AutoMapper.IValueResolver<AppUser, UserViewModel, String>
             {
-                string IValueResolver<IdentityUser, UserViewModel, string>.Resolve(IdentityUser source, UserViewModel destination, string destMember, ResolutionContext context)
+                string IValueResolver<AppUser, UserViewModel, string>.Resolve(AppUser source, UserViewModel destination, string destMember, ResolutionContext context)
                 {
                     string result = string.Empty;
-                    var _userManager = (UserManager<IdentityUser>)context.Options.Items["RoleManager"];
+                    var _userManager = (UserManager<AppUser>)context.Options.Items["RoleManager"];
                     if (_userManager != null)
                     {
                         IList<string> roles = Task.Run(async () => await _userManager.GetRolesAsync(source)).Result;
@@ -48,7 +49,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         private IList<IdentityRole>? dbRoles;
 
         [Inject]
-        private UserManager<IdentityUser>? _userManager { get; set; }
+        private UserManager<AppUser>? _userManager { get; set; }
         [Inject]
         private RoleManager<IdentityRole>? _roleManager { get; set; }
 

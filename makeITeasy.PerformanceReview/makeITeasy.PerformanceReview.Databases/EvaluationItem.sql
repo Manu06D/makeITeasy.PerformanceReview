@@ -8,5 +8,6 @@
     [CreationDate] DATETIME2 NULL, 
     [LastModificationDate] DATETIME2 NULL, 
     CONSTRAINT [FK_PerformanceReviewEvaluationItem_ToPerformanceReviewEvalution] FOREIGN KEY ([EvaluationId]) REFERENCES [Evaluation]([Id]), 
-    CONSTRAINT [FK_PerformanceReviewEvaluationItem_ToPerformanceReviewItem] FOREIGN KEY ([FormItemId]) REFERENCES [FormItem]([Id])
+    CONSTRAINT [FK_PerformanceReviewEvaluationItem_ToPerformanceReviewItem] FOREIGN KEY ([FormItemId]) REFERENCES [FormItem]([Id]), 
+    CONSTRAINT [FK_EvaluationItem_ToTable] FOREIGN KEY ([UserIdentityId]) REFERENCES [AppUser]([Id])
 )

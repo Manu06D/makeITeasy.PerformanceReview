@@ -6,6 +6,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
+using makeITeasy.PerformanceReview.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +18,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ResetPasswordModel(UserManager<IdentityUser> userManager)
+        public ResetPasswordModel(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
@@ -49,7 +51,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 

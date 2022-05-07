@@ -1,5 +1,4 @@
-﻿@using makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
-@using makeITeasy.PerformanceReview.Models
+﻿@using makeITeasy.PerformanceReview.Models
 
 <style>
     .mud-table-cell-custom-group {
@@ -52,8 +51,8 @@
                 <MudTd Style="text-align: right" DataLabel="Molar mass"></MudTd>*@
         </RowTemplate>
     </MudTable>
-
-     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update">Update</MudButton>
+    <MudPaper Class="d-flex flex-row-reverse flex-grow-1 gap-4" Elevation="0">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Close" Class="d-inline-flex pa-4">Close xx</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Update xx</MudButton>
+    </MudPaper>
 }
-
-

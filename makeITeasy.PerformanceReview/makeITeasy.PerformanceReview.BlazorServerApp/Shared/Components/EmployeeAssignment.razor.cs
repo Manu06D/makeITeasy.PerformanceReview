@@ -13,7 +13,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 {
     public partial class EmployeeAssignment
     {
-        public class UserViewModel : AppFramework.Core.Interfaces.IMapFrom<IdentityUser>
+        public class UserViewModel : AppFramework.Core.Interfaces.IMapFrom<AppUser>
         {
             public string? Id { get; set; }
 
@@ -24,7 +24,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         }
 
         [Inject]
-        private UserManager<IdentityUser>? _userManager { get; set; }
+        private UserManager<AppUser>? _userManager { get; set; }
         [Inject]
         private AutoMapper.IMapper? _mapper { get; set; }
         [Inject]
@@ -50,16 +50,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         {
             if (!string.IsNullOrWhiteSpace(searchString) && _userManager != null)
             {
-                var users = _userManager.Users.Where(x => x.Email.StartsWith(searchString)).ToList();
+                var users = _userManager.Users.Where(x => x.Email.StartsWith(searchString) && x.ManagerId == null).ToList();
 
-                if (users.Any())
-                {
-                    var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Employee>(new BasicEmployeeQuery() { UserIdentitiesId = users.Select(x => x.Id).ToList() }, false));
-
-                    users = users.ExceptBy(results.Results.Select(x => x.UserIdentityId), x => x.Id).ToList();
-
-                    return new TableData<UserViewModel>() { Items = _mapper?.Map<List<UserViewModel>>(users.Take(state.PageSize).Skip(state.Page * state.PageSize)), TotalItems = users.Count };
-                }
+                return new TableData<UserViewModel>() { Items = _mapper?.Map<List<UserViewModel>>(users.Take(state.PageSize).Skip(state.Page * state.PageSize)), TotalItems = users.Count };
             }
 
             return new TableData<UserViewModel>() { Items = new List<UserViewModel>(), TotalItems = 0 };
@@ -67,18 +60,27 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 
         private async Task OnValidSubmit(EditContext context)
         {
-            if (context.Model is UserViewModel assigningUser)
+            if (context.Model is UserViewModel assigningUser && _userManager != null)
             {
-                Employee employee = new Employee() { ManagerIdentityId = (await authenticationStateTask).User.GetIdentityUserID(), UserIdentityId = assigningUser.Id, Name = assigningUser.Name };
-                var dbCreationResult = await _mediator.Send(new CreateEntityCommand<Employee>(employee));
+                string? currentUserId = (await authenticationStateTask).User.GetIdentityUserID();
+                AppUser? selectedUser = _userManager.Users.FirstOrDefault(x => x.Id == assigningUser.Id);
 
-                if (dbCreationResult.Result == CommandState.Success)
+                if (selectedUser != null)
                 {
-                    Snackbar?.Add($"Employee assigned", Severity.Success);
-                }
-                else
-                {
-                    Snackbar?.Add($"an error has occured", Severity.Error);
+                    selectedUser.ManagerId = currentUserId;
+                    await _userManager.UpdateAsync(selectedUser);
+
+                    Employee employee = new Employee() { ManagerIdentityId = currentUserId, UserIdentityId = assigningUser.Id };
+                    var dbCreationResult = await _mediator.Send(new CreateEntityCommand<Employee>(employee));
+
+                    if (dbCreationResult.Result == CommandState.Success)
+                    {
+                        Snackbar?.Add($"Employee assigned", Severity.Success);
+                    }
+                    else
+                    {
+                        Snackbar?.Add($"an error has occured", Severity.Error);
+                    }
                 }
 
                 MudDialog?.Close(DialogResult.Ok(true));

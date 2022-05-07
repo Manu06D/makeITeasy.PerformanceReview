@@ -26,10 +26,17 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(450);
 
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.HasOne(d => d.ManagerIdentity)
+                .WithMany(p => p.EmployeeManagerIdentities)
+                .HasForeignKey(d => d.ManagerIdentityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Employee_ToTable_1");
+
+            entity.HasOne(d => d.UserIdentity)
+                .WithOne(p => p.EmployeeUserIdentity)
+                .HasForeignKey<Employee>(d => d.UserIdentityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Employee_ToTable");
 
             OnConfigurePartial(entity);
         }

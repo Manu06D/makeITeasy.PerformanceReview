@@ -28,8 +28,13 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Evaluation_ToForm");
 
+            entity.HasOne(d => d.ManagerIdentity)
+                .WithMany(p => p.EvaluationManagerIdentities)
+                .HasForeignKey(d => d.ManagerIdentityId)
+                .HasConstraintName("FK_Evaluation_ToTable");
+
             entity.HasOne(d => d.UserIdentity)
-                .WithMany(p => p.Evaluations)
+                .WithMany(p => p.EvaluationUserIdentities)
                 .HasForeignKey(d => d.UserIdentityId)
                 .HasConstraintName("FK_Evaluation_ToEmployee");
 

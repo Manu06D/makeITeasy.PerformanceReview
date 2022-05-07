@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using makeITeasy.PerformanceReview.Models;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace makeITeasy.PerformanceReview.Infrastructure.Data
 {
-    public partial class PeformanceReviewDbContext
+    public partial class PeformanceReviewDbContext 
     {
         private const string adminId = "2301D884-221A-4E7D-B509-0113DCC043E1";
         private const string employeeId = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3";

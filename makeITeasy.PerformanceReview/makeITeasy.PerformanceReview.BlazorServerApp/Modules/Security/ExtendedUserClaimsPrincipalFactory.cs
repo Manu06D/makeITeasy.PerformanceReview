@@ -8,18 +8,18 @@ using System.Security.Claims;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security
 {
-    public class ExtendedUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<IdentityUser>
+    public class ExtendedUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<AppUser>
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly MediatR.IMediator _mediator;
 
-        public ExtendedUserClaimsPrincipalFactory(UserManager<IdentityUser> userManager, IOptions<IdentityOptions> optionsAccessor, MediatR.IMediator mediator) : base(userManager, optionsAccessor)
+        public ExtendedUserClaimsPrincipalFactory(UserManager<AppUser> userManager, IOptions<IdentityOptions> optionsAccessor, MediatR.IMediator mediator) : base(userManager, optionsAccessor)
         {
             _userManager = userManager;
             _mediator = mediator;
         }
 
-        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(IdentityUser user)
+        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(AppUser user)
         {
             var identity = await base.GenerateClaimsAsync(user);
 

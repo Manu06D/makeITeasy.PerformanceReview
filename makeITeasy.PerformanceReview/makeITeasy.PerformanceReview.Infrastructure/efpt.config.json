@@ -14,6 +14,10 @@
    "SelectedToBeGenerated": 1,
    "Tables": [
       {
+         "Name": "[dbo].[AppUser]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Employee]",
          "ObjectType": 0
       },
@@ -45,7 +49,7 @@
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": true,
    "UseNoConstructor": false,
-   "UseNoDefaultConstructor": false,
+   "UseNoDefaultConstructor": true,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,

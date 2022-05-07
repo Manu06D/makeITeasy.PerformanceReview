@@ -10,8 +10,9 @@ using System;
 using System.Collections.Generic;
 namespace makeITeasy.PerformanceReview.Infrastructure.Data
 {
-    public partial class PeformanceReviewDbContext : IdentityDbContext<IdentityUser>
+    public partial class PeformanceReviewDbContext : IdentityDbContext<AppUser>
     {
+        public virtual DbSet<AppUser> AppUsers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Evaluation> Evaluations { get; set; }
         public virtual DbSet<EvaluationItem> EvaluationItems { get; set; }
@@ -26,6 +27,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=makeITeasy.PerformanceReview.Databases;Integrated Security=true");
 
+            modelBuilder.ApplyConfiguration(new Configurations.AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.EmployeeConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.EvaluationConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.EvaluationItemConfiguration());

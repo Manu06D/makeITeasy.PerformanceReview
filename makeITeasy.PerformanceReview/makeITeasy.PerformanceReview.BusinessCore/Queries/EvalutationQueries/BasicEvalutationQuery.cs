@@ -1,9 +1,9 @@
 ﻿using makeITeasy.AppFramework.Models;
 using makeITeasy.PerformanceReview.Models;
 
-namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEvalutationQueries
+namespace makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries
 {
-    public class BasicPerformanceReviewEvalutationQuery : BaseTransactionQuery<Evaluation>
+    public class BasicEvalutationQuery : BaseTransactionQuery<Evaluation>
     {
         public int? ID { get; set; }
         public string? ManagerId { get; set; }
@@ -17,7 +17,7 @@ namespace makeITeasy.PerformanceReview.BusinessCore.Queries.PerformanceReviewEva
 
             if (!string.IsNullOrEmpty(ManagerId))
             {
-                AddFunctionToCriteria(x => x.UserIdentity.ManagerIdentityId == ManagerId);
+                AddFunctionToCriteria(x => x.ManagerIdentityId == ManagerId);
             }
         }
     }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using makeITeasy.PerformanceReview.Infrastructure.Data;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security;
 using Serilog;
+using makeITeasy.PerformanceReview.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +25,12 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 //Authentification
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+builder.Services.AddDefaultIdentity<AppUser>(options => 
     { 
         options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
 
         if (builder.Environment.IsDevelopment())
         {
@@ -45,7 +48,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 ;
 
 builder.Services
-    .AddScoped<AuthenticationStateProvider, makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>()
+    .AddScoped<AuthenticationStateProvider, makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.RevalidatingIdentityAuthenticationStateProvider<AppUser>>()
     .AddScoped<TokenProvider>();
 ;
 

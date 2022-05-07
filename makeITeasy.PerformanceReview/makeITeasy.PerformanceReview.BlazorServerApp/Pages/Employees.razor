@@ -2,11 +2,11 @@
 
 @using Microsoft.AspNetCore.Identity
 @using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
-@using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries
+@using makeITeasy.PerformanceReview.BusinessCore.Queries.UserQueries
 @using makeITeasy.PerformanceReview.Models
 @using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
 
-<GenericList TItem=Employee TViewItem=EmployeeViewModel TQuery=BasicEmployeeQuery
+<GenericList TItem=AppUser TViewItem=AppUserViewModel TQuery=BasicAppUserQuery
              Title="Employees N-1" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="Id" T="Evaluation" InitialDirection="SortDirection.Ascending">Name</MudTableSortLabel></MudTh>

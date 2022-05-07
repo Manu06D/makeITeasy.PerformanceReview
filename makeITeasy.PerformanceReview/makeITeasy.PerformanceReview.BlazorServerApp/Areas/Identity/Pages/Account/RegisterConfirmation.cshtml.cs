@@ -5,6 +5,8 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using makeITeasy.PerformanceReview.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,10 +19,10 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.Pages.Acco
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<AppUser> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
