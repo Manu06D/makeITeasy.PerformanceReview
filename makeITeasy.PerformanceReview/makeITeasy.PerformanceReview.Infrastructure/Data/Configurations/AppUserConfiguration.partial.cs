@@ -14,8 +14,6 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         partial void OnConfigurePartial(EntityTypeBuilder<AppUser> entity)
         {
             entity.HasKey(e => e.Id);
-
-            entity.HasKey("Id");
         }
     }
 }

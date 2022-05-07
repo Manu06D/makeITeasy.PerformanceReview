@@ -39,6 +39,9 @@
          "ObjectType": 0
       },
       {
+         "ExcludedColumns": [
+            "State"
+         ],
          "Name": "[dbo].[Evaluation]",
          "ObjectType": 0
       },

@@ -11,13 +11,15 @@
             Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="Id" T="EvalutationViewModel" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Employee.LastName" T="EvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="PerformanceReviewForm.CreationDate" T="EvalutationViewModel">Creation Date</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="UserIdentity.Name" T="EvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="State" T="EvalutationViewModel">State</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="CreationDate" T="EvalutationViewModel">Creation Date</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.UserIdentityName</MudTd>
+        <MudTd DataLabel="Name">@context.State</MudTd>
         <MudTd DataLabel="Name">@context.CreationDate?.ToString("dd MMM yyyy HH:mm")</MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>

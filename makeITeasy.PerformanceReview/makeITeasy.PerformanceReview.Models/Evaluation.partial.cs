@@ -7,5 +7,7 @@ namespace makeITeasy.PerformanceReview.Models
     public partial class Evaluation : ITimeTrackingEntity
     {
         public object DatabaseID => Id;
+
+        public EvaluationState State { get; set; }
     }
 }

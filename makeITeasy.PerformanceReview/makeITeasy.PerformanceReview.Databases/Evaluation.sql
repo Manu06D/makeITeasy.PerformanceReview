@@ -4,7 +4,7 @@
     [FormId] INT NOT NULL, 
     [UserIdentityId] NVARCHAR(450) NULL, 
     [ManagerIdentityId] NVARCHAR(450) NULL, 
-    [State] INT NULL, 
+    [State] INT NULL DEFAULT 0, 
     [CreationDate] DATETIME2 NULL, 
     [LastModificationDate] DATETIME2 NULL, 
     CONSTRAINT [FK_Evaluation_ToForm] FOREIGN KEY ([FormId]) REFERENCES [Form]([Id]) ,

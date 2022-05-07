@@ -86,7 +86,7 @@
             string.IsNullOrWhiteSpace(state.SortLabel) ? DefaultSortColumn : state.SortLabel,
             state.SortDirection == SortDirection.Descending);
 
-        Query.AddOrder(order);
+        Query.OrderByStrings = new List<OrderBySpecification<string>>() { order };
 
         var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryWithProjectCommand<TItem, TViewItem>(Query, true));
 

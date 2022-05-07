@@ -22,6 +22,8 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
             public string? UserIdentityName { get; set; }
 
+            public string? State { get; set; }
+
             public void Mapping(AutoMapper.Profile profile)
             {
                 if (profile != null)
