@@ -11,7 +11,7 @@ using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 {
-    [Authorize(Roles = "admin,manager")]
+    //[Authorize(Roles = "admin,manager")]
     public partial class Reviews
     {
         public class EvalutationViewModel : IMapFrom<Evaluation>
@@ -81,8 +81,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
             if (!result.Cancelled)
             {
-                int.TryParse(result.Data.ToString(), out int createdReview);
-                Snackbar.Add($"Review Created (id:{createdReview})", Severity.Success);
+                Snackbar.Add($"Review updated", Severity.Success);
                 await table.ReloadTableAsync();
             }
         }

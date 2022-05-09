@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security;
+
+using System.Security.Claims;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
 {
@@ -11,7 +13,12 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
 
         public static List<string> GetRoles(this ClaimsPrincipal claimPrincipal)
         {
-            return claimPrincipal.Claims.Where(x => x.Type == System.Security.Claims.ClaimTypes.Role).Select(x => x.Value).ToList();
+            return claimPrincipal.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+        }
+
+        public static bool IsEmployee(this ClaimsPrincipal claimPrincipal)
+        {
+            return claimPrincipal.Claims.Any(x => x.Type == ClaimTypes.Role && x.Value == Role.Employee.ToString().ToLower());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@using makeITeasy.PerformanceReview.Models
+﻿@using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
+@using makeITeasy.PerformanceReview.Models
 
 <style>
     .mud-table-cell-custom-group {
@@ -35,12 +36,15 @@
         </GroupHeaderTemplate>
         <RowTemplate>
             <MudTd DataLabel="Description">@context.Description</MudTd>
-            <MudTd DataLabel="Nr">
-                <MudRating Size="Size.Medium"
+            <MudTd DataLabel="ManagerReview">
+                @if (evaluation.State == EvaluationState.Closed || !currentClaims.IsEmployee())
+                {
+                    <MudRating Size="Size.Medium"
                        @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.ManagerIdentityId && x.FormItemId==context.Id).Rating"
                        ReadOnly="evaluation.ManagerIdentityId != currentIdentityUserID"></MudRating>
+                }
             </MudTd>
-            <MudTd DataLabel="Nr">
+            <MudTd DataLabel="EmployeeReview">
                 <MudRating Size="Size.Medium"
                        @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.UserIdentityId && x.FormItemId==context.Id).Rating"
                        ReadOnly="evaluation.UserIdentityId != currentIdentityUserID"></MudRating>
@@ -51,8 +55,13 @@
                 <MudTd Style="text-align: right" DataLabel="Molar mass"></MudTd>*@
         </RowTemplate>
     </MudTable>
+
     <MudPaper Class="d-flex flex-row-reverse flex-grow-1 gap-4" Elevation="0">
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Close" Class="d-inline-flex pa-4">Close xx</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Update xx</MudButton>
+        @if (!@currentClaims.IsEmployee())
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Close" Class="d-inline-flex pa-4">Validate Review</MudButton>
+        }
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Save or Update</MudButton>
     </MudPaper>
+
 }

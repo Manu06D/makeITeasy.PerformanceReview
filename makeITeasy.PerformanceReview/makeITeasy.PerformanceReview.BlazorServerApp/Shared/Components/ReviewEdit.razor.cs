@@ -22,15 +22,20 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
         [Inject]
         private MediatR.IMediator? _mediator { get; set; }
 
+        [Inject]
+        private ISnackbar? Snackbar { get; set; }
+
         private Evaluation? evaluation;
         private string? currentIdentityUserID;
         private IList<string>? currentUserRoles;
+        private System.Security.Claims.ClaimsPrincipal? currentClaims;
+
         private TableGroupDefinition<FormItem> _groupDefinition = new() {GroupName = "Group", Indentation = false, Expandable = true, Selector = (e) => e.Category};
         
 
         protected override async Task OnInitializedAsync()
         {
-            var currentClaims = (await authenticationStateTask).User;
+            currentClaims = (await authenticationStateTask).User;
 
             currentIdentityUserID = currentClaims.GetIdentityUserID();
             currentUserRoles = currentClaims.GetRoles();
@@ -80,6 +85,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
                     string s = "";
                 }
             }
+            MudDialog?.Close();
         }
 
         private async Task Close()
