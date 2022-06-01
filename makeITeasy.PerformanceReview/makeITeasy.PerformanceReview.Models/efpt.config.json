@@ -54,6 +54,9 @@
          "ObjectType": 0
       },
       {
+         "ExcludedColumns": [
+            "FormItemType"
+         ],
          "Name": "[dbo].[FormItem]",
          "ObjectType": 0
       }

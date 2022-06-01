@@ -6,14 +6,15 @@
 @using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries
 @using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries
 @using makeITeasy.PerformanceReview.Models
+@using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
 
 <GenericList TItem=Evaluation TViewItem=EvalutationViewModel TQuery=ManagerOrEmployeeEvaluationQuery 
-            Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="Id" @ref="table" Query="defaultQuery">
+            Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="CreationDate"  @ref="table" Query="defaultQuery">
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="EvalutationViewModel" InitialDirection="SortDirection.Ascending">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="EvalutationViewModel" >Id</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="UserIdentity.Name" T="EvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="State" T="EvalutationViewModel">State</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="CreationDate" T="EvalutationViewModel">Creation Date</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="CreationDate" T="EvalutationViewModel" InitialDirection="SortDirection.Descending">Creation Date</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
@@ -22,8 +23,14 @@
         <MudTd DataLabel="Name">@context.State</MudTd>
         <MudTd DataLabel="Name">@context.CreationDate?.ToString("dd MMM yyyy HH:mm")</MudTd>
         <MudTd>
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>
-            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" @onclick="@(()=>DeleteAsync(@context))" Color="Color.Secondary"></MudIconButton>*@
+             @if(context.IsReviewed || (currentClaims?.IsManager() == true && context.IsFilled))
+             {
+                <MudIconButton Icon="@Icons.Material.Filled.RemoveRedEye" @onclick="@(()=>Review(@context.Id))" Color="Color.Primary"></MudIconButton>
+            }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="@(()=>Edit(@context.Id))" Color="Color.Primary"></MudIconButton>              
+            }
         </MudTd>
     </RowTemplate>
 </GenericList>

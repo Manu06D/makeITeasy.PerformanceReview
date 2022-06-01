@@ -20,5 +20,10 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions
         {
             return claimPrincipal.Claims.Any(x => x.Type == ClaimTypes.Role && x.Value == Role.Employee.ToString().ToLower());
         }
+
+        public static bool IsManager(this ClaimsPrincipal claimPrincipal)
+        {
+            return claimPrincipal.Claims.Any(x => x.Type == ClaimTypes.Role && x.Value == Role.Manager.ToString().ToLower());
+        }
     }
 }

@@ -28,40 +28,43 @@
         </ColGroup>
         <HeaderContent>
             <MudTh>Question</MudTh>
-            <MudTh>Manager</MudTh>
-            <MudTh>Employee</MudTh>
+            @if(Mode == ReviewEditMode.Review)
+            {
+                <MudTh>Manager</MudTh>
+                <MudTh>Employee</MudTh>
+            }
+            else
+            {
+                <MudTh>Rate</MudTh>
+                <MudTh>Comments</MudTh> 
+            }
         </HeaderContent>
         <GroupHeaderTemplate>
             <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.Key}")</MudTh>
         </GroupHeaderTemplate>
         <RowTemplate>
-            <MudTd DataLabel="Description">@context.Description</MudTd>
-            <MudTd DataLabel="ManagerReview">
-                @if (evaluation.State == EvaluationState.Closed || !currentClaims.IsEmployee())
-                {
-                    <MudRating Size="Size.Medium"
-                       @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.ManagerIdentityId && x.FormItemId==context.Id).Rating"
-                       ReadOnly="evaluation.ManagerIdentityId != currentIdentityUserID"></MudRating>
-                }
-            </MudTd>
-            <MudTd DataLabel="EmployeeReview">
-                <MudRating Size="Size.Medium"
-                       @bind-SelectedValue="evaluation.EvaluationItems.First(x => x.UserIdentityId == evaluation.UserIdentityId && x.FormItemId==context.Id).Rating"
-                       ReadOnly="evaluation.UserIdentityId != currentIdentityUserID"></MudRating>
-            </MudTd>
-            @*            <MudTd DataLabel="Sign">@context.Id</MudTd>
-                <MudTd DataLabel="Name"></MudTd>
-                <MudTd DataLabel="Position">@context.Category</MudTd>
-                <MudTd Style="text-align: right" DataLabel="Molar mass"></MudTd>*@
+            <ReviewItemEdit 
+                Model="@context" 
+                Evaluation="evaluation" 
+                CurrentIdentityUserID="@currentIdentityUserID" 
+                IsEmployee="currentClaims.IsEmployee()"
+                Mode="@Mode"
+            ></ReviewItemEdit>
         </RowTemplate>
     </MudTable>
 
     <MudPaper Class="d-flex flex-row-reverse flex-grow-1 gap-4" Elevation="0">
-        @if (!@currentClaims.IsEmployee())
+        @if (Mode == ReviewEditMode.Review && @currentClaims.IsManager() &&  evaluation.CanReview)//evaluation.State != EvaluationState.Reviewed)
         {
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Close" Class="d-inline-flex pa-4">Validate Review</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Validate" Class="d-inline-flex pa-4">Validate Review</MudButton>
+            
+@*            @if ( == true && )
+            {
+            }
+*@        }
+        @if(evaluation.CanEdit)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Save or Update</MudButton>
         }
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Save or Update</MudButton>
     </MudPaper>
-
 }

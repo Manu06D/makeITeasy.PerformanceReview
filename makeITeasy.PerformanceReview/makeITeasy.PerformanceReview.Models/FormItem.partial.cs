@@ -9,5 +9,6 @@ namespace makeITeasy.PerformanceReview.Models
     public partial class FormItem
     {
         public object DatabaseID => Id;
+        public FormItemType? FormItemType { get; set; }
     }
 }

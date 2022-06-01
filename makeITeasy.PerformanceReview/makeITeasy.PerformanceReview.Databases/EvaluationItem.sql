@@ -5,6 +5,7 @@
     [FormItemId] INT NOT NULL, 
     [UserIdentityId] NVARCHAR(450) NOT NULL, 
     [Rating] INT NOT NULL, 
+    [Comments] NVARCHAR(MAX) NULL, 
     [CreationDate] DATETIME2 NULL, 
     [LastModificationDate] DATETIME2 NULL, 
     CONSTRAINT [FK_PerformanceReviewEvaluationItem_ToPerformanceReviewEvalution] FOREIGN KEY ([EvaluationId]) REFERENCES [Evaluation]([Id]), 

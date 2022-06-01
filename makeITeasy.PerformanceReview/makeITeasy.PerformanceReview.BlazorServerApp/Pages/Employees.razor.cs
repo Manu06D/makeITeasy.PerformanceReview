@@ -70,18 +70,19 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             defaultQuery = new BasicAppUserQuery() { ManagerIdentityId = (await authenticationStateTask).User.GetIdentityUserID() };
         }
 
-        private void Edit(int id)
+        private void Details(AppUserViewModel employee)
         {
-        }
-
-        private void Delete(int id)
-        {
+            var dialog = DialogService?.Show<EmployeeDetails>(
+                $"Employee details : {employee.Name}",
+                new DialogParameters() { ["Employee"] = employee },
+                new DialogOptions() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false }
+                );
         }
 
         private async Task CreateNewAsync()
         {
             var dialog = DialogService?.Show<EmployeeAssignment>(String.Empty,
-                                                             new DialogOptions() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false });
+                                                             new DialogOptions() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = true });
             var result = await dialog.Result;
 
             if (!result.Cancelled)

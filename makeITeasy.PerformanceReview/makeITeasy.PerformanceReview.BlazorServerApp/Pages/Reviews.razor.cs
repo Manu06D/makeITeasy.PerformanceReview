@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries;
+using static makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components.ReviewEdit;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 {
-    //[Authorize(Roles = "admin,manager")]
+    [Authorize]
     public partial class Reviews
     {
         public class EvalutationViewModel : IMapFrom<Evaluation>
@@ -22,7 +23,10 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
             public string? UserIdentityName { get; set; }
 
-            public string? State { get; set; }
+            public EvaluationState? State { get; set; }
+
+            public bool FilledByManager { get; set; }
+            public bool FilledByEmployee { get; set; }
 
             public void Mapping(AutoMapper.Profile profile)
             {
@@ -31,6 +35,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
                     profile.CreateMap<Evaluation, EvalutationViewModel>();
                 }
             }
+            public bool IsReviewed { get; set; }
+
+            public bool IsFilled => FilledByEmployee && FilledByManager;
         }
 
         [CascadingParameter]
@@ -45,6 +52,8 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         [Inject]
         private MediatR.IMediator? _mediator { get; set; }
 
+        private System.Security.Claims.ClaimsPrincipal? currentClaims;
+
         private GenericList<Evaluation, EvalutationViewModel, ManagerOrEmployeeEvaluationQuery>? table;
         private ManagerOrEmployeeEvaluationQuery? defaultQuery;
 
@@ -52,8 +61,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            string? currentIdentityId = (await authenticationStateTask).User.GetIdentityUserID();
-            defaultQuery = new ManagerOrEmployeeEvaluationQuery() { IdentityId = currentIdentityId,  };
+            currentClaims = (await authenticationStateTask).User;
+
+            defaultQuery = new ManagerOrEmployeeEvaluationQuery() { IdentityId = currentClaims.GetIdentityUserID(),  };
         }
 
         private async Task CreateNewAsync()
@@ -74,9 +84,18 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
         private async Task Edit(int id)
         {
+            await openReviewDialogAsync(id, ReviewEditMode.Edit);
+        }
+        private async Task Review(int id)
+        {
+            await openReviewDialogAsync(id, ReviewEditMode.Review);
+        }
+
+        private async Task openReviewDialogAsync(int id, ReviewEditMode mode)
+        {
             defaultDialogOptions.DisableBackdropClick = true;
-            var dialog = DialogService.Show<ReviewEdit>(string.Empty, new DialogParameters()
-            {["id"] = id}, defaultDialogOptions);
+            var dialog = DialogService.Show<ReviewEdit>(string.Empty, new DialogParameters() { ["id"] = id, ["Mode"] = mode }, defaultDialogOptions);
+
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -85,6 +104,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
                 await table.ReloadTableAsync();
             }
         }
+
 
         private async Task DeleteAsync(Evaluation entity)
         {

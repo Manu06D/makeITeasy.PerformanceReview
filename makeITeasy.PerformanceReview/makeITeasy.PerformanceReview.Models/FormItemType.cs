@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace makeITeasy.PerformanceReview.Models
 {
-    public enum EvaluationState
+    public enum FormItemType
     {
-        Open = 0,
-        Reviewed  = 10,
-        Closed = 20
+        Rating = 0
     }
 }

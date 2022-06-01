@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [FormId] INT NOT NULL, 
+    [FormItemType] INT NULL DEFAULT 0, 
     --[PerformanceReviewCategoryId] INT NOT NULL, 
     [Description] VARCHAR(512) NOT NULL
     CONSTRAINT [FK_PerformanceReviewQuestion_ToPerformanceReview] FOREIGN KEY ([FormId]) REFERENCES [Form]([Id]), 

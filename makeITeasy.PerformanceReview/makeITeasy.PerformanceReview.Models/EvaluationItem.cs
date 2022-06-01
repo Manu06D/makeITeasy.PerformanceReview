@@ -11,6 +11,7 @@ namespace makeITeasy.PerformanceReview.Models
         public int FormItemId { get; set; }
         public string UserIdentityId { get; set; } = null!;
         public int Rating { get; set; }
+        public string? Comments { get; set; }
         public DateTime? CreationDate { get; set; }
         public DateTime? LastModificationDate { get; set; }
 

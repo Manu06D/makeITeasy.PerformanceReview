@@ -1,0 +1,37 @@
+﻿
+<MudTd DataLabel="Description">@Model.Description</MudTd>
+@if (Mode == ReviewEdit.ReviewEditMode.Review)
+{
+    <MudTd DataLabel="ManagerReview" @*colspan="2"*@>
+        @if (Evaluation.CanEdit || !IsEmployee)
+        {
+            <MudRating Size="Size.Medium"
+               @bind-SelectedValue="Evaluation.EvaluationItems.First(x => x.UserIdentityId == Evaluation.ManagerIdentityId && x.FormItemId==Model.Id).Rating"
+               ReadOnly="Evaluation.ManagerIdentityId != CurrentIdentityUserID || Evaluation.State == Models.EvaluationState.Reviewed"></MudRating>
+            <br />
+            <MudTextField @bind-Value="Evaluation.EvaluationItems.First(x => x.UserIdentityId == Evaluation.ManagerIdentityId && x.FormItemId==Model.Id).Comments"
+                  Label="Comments" Variant="Variant.Text" Lines="2" ReadOnly="Evaluation.State == Models.EvaluationState.Reviewed"></MudTextField>
+        }
+    </MudTd>
+    <MudTd DataLabel="EmployeeReview">
+        <MudRating Size="Size.Medium"
+               @bind-SelectedValue="Evaluation.EvaluationItems.First(x => x.UserIdentityId == Evaluation.UserIdentityId && x.FormItemId==Model.Id).Rating"
+               ReadOnly="true"></MudRating>
+        <br />
+        <MudTextField @bind-Value="Evaluation.EvaluationItems.First(x => x.UserIdentityId == Evaluation.UserIdentityId && x.FormItemId==Model.Id).Comments" 
+            Label="Comments" Variant="Variant.Text" ReadOnly="true"></MudTextField>
+    </MudTd>
+}
+else
+{
+    <MudTd DataLabel="Review">
+        <MudRating Size="Size.Medium"
+               @bind-SelectedValue="Evaluation.EvaluationItems.First(x => x.UserIdentityId == CurrentIdentityUserID && x.FormItemId==Model.Id).Rating"></MudRating>
+
+        <br />
+    </MudTd>
+    <MudTd DataLabel="ManagerReview">
+        <MudTextField @bind-Value="Evaluation.EvaluationItems.First(x => x.UserIdentityId == CurrentIdentityUserID && x.FormItemId==Model.Id).Comments" 
+            Label="" Variant="Variant.Text"></MudTextField>
+    </MudTd>
+}
