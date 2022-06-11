@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[AspNetRoles] (
+﻿CREATE TABLE [perfReview].[AspNetRoles] (
     [Id]               NVARCHAR (450) NOT NULL,
     [Name]             NVARCHAR (256) NULL,
     [NormalizedName]   NVARCHAR (256) NULL,
@@ -9,5 +9,5 @@
 
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex]
-    ON [dbo].[AspNetRoles]([NormalizedName] ASC) WHERE ([NormalizedName] IS NOT NULL);
+    ON [perfReview].[AspNetRoles]([NormalizedName] ASC) WHERE ([NormalizedName] IS NOT NULL);
 

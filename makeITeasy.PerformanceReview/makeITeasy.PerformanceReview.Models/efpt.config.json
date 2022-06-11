@@ -14,50 +14,37 @@
    "SelectedToBeGenerated": 2,
    "Tables": [
       {
-         "ExcludedColumns": [
-            "UserName",
-            "NormalizedUserName",
-            "Email",
-            "NormalizedEmail",
-            "EmailConfirmed",
-            "PasswordHash",
-            "SecurityStamp",
-            "ConcurrencyStamp",
-            "PhoneNumber",
-            "PhoneNumberConfirmed",
-            "TwoFactorEnabled",
-            "LockoutEnd",
-            "LockoutEnabled",
-            "AccessFailedCount",
-            "Name"
-         ],
-         "Name": "[dbo].[AppUser]",
+         "Name": "[perfReview].[AppUser]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Employee]",
+         "Name": "[perfReview].[Employee]",
          "ObjectType": 0
       },
       {
          "ExcludedColumns": [
             "State"
          ],
-         "Name": "[dbo].[Evaluation]",
+         "Name": "[perfReview].[Evaluation]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[EvaluationItem]",
+         "Name": "[perfReview].[EvaluationItem]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Form]",
+         "Name": "[perfReview].[Form]",
          "ObjectType": 0
       },
       {
          "ExcludedColumns": [
             "FormItemType"
          ],
-         "Name": "[dbo].[FormItem]",
+         "Name": "[perfReview].[FormItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[perfReview].[Level]",
          "ObjectType": 0
       }
    ],

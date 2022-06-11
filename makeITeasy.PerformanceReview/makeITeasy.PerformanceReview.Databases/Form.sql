@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Form]
+﻿CREATE TABLE [perfReview].[Form]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     --[UserId] INT NOT NULL, 

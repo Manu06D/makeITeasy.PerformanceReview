@@ -16,9 +16,11 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Evaluation> entity)
         {
-            entity.ToTable("Evaluation");
+            entity.ToTable("Evaluation", "perfReview");
 
             entity.Property(e => e.ManagerIdentityId).HasMaxLength(450);
+
+            entity.Property(e => e.State).HasDefaultValueSql("0");
 
             entity.Property(e => e.UserIdentityId).HasMaxLength(450);
 

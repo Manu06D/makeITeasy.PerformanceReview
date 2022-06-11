@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[AppUser]
+﻿CREATE TABLE [perfReview].[AppUser]
 (
     [Id]                   NVARCHAR (450)     NOT NULL,
     [UserName]             NVARCHAR (256)     NULL,
@@ -18,15 +18,15 @@
     [Name] VARCHAR(250) NULL, 
     [ManagerId] NVARCHAR (450) NULL, 
     CONSTRAINT [PK_AppUsers] PRIMARY KEY CLUSTERED ([Id] ASC), 
-    CONSTRAINT [FK_AppUser_ToTable] FOREIGN KEY ([ManagerId]) REFERENCES [AppUser]([Id])
+    CONSTRAINT [FK_AppUser_ToTable] FOREIGN KEY ([ManagerId]) REFERENCES [perfReview].[AppUser]([Id])
 )
 
 
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
-    ON [dbo].[AppUser]([NormalizedUserName] ASC) WHERE ([NormalizedUserName] IS NOT NULL);
+    ON [perfReview].[AppUser]([NormalizedUserName] ASC) WHERE ([NormalizedUserName] IS NOT NULL);
 
 
 GO
 CREATE NONCLUSTERED INDEX [EmailIndex]
-    ON [dbo].[AppUser]([NormalizedEmail] ASC);
+    ON [perfReview].[AppUser]([NormalizedEmail] ASC);

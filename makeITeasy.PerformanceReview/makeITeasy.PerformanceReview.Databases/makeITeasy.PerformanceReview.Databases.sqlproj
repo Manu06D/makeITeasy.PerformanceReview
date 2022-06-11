@@ -74,6 +74,8 @@
     <Build Include="dbo\Tables\AspNetRoles.sql" />
     <Build Include="dbo\Tables\AspNetRoleClaims.sql" />
     <Build Include="AppUser.sql" />
+    <Build Include="Level.sql" />
+    <Build Include="perfReview.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="makeITeasy.PerformanceReview.Databases.refactorlog" />

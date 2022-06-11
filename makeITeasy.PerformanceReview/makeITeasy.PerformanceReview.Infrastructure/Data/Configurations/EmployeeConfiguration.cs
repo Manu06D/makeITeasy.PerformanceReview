@@ -18,7 +18,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
         {
             entity.HasKey(e => e.UserIdentityId);
 
-            entity.ToTable("Employee");
+            entity.ToTable("Employee", "perfReview");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 

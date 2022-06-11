@@ -16,7 +16,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Form> entity)
         {
-            entity.ToTable("Form");
+            entity.ToTable("Form", "perfReview");
 
             entity.Property(e => e.Name)
                 .IsRequired()

@@ -16,7 +16,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<FormItem> entity)
         {
-            entity.ToTable("FormItem");
+            entity.ToTable("FormItem", "perfReview");
 
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
@@ -26,6 +26,8 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(512)
                 .IsUnicode(false);
+
+            entity.Property(e => e.FormItemType).HasDefaultValueSql("0");
 
             entity.HasOne(d => d.Form)
                 .WithMany(p => p.FormItems)

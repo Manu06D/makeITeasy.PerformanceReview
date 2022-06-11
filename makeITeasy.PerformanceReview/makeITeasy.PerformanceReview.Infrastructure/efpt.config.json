@@ -14,27 +14,27 @@
    "SelectedToBeGenerated": 1,
    "Tables": [
       {
-         "Name": "[dbo].[AppUser]",
+         "Name": "[perfReview].[AppUser]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Employee]",
+         "Name": "[perfReview].[Employee]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Evaluation]",
+         "Name": "[perfReview].[Evaluation]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[EvaluationItem]",
+         "Name": "[perfReview].[EvaluationItem]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Form]",
+         "Name": "[perfReview].[Form]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[FormItem]",
+         "Name": "[perfReview].[FormItem]",
          "ObjectType": 0
       }
    ],

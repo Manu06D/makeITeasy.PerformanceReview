@@ -16,7 +16,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> entity)
         {
-            entity.ToTable("AppUser");
+            entity.ToTable("AppUser", "perfReview");
 
             entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 

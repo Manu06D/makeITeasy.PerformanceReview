@@ -54,7 +54,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
                     .HasName("RoleNameIndex")
                     .HasFilter("[NormalizedName] IS NOT NULL");
 
-                b.ToTable("AspNetRoles");
+                b.ToTable("AspNetRoles", "perfReview");
             });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -78,7 +78,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
 
                 b.HasIndex("RoleId");
 
-                b.ToTable("AspNetRoleClaims");
+                b.ToTable("AspNetRoleClaims", "perfReview");
             });
 
             //modelBuilder.Entity("makeITeasy.PerformanceReview.Models.AppUser", b =>
@@ -167,7 +167,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
 
                 b.HasIndex("UserId");
 
-                b.ToTable("AspNetUserClaims");
+                b.ToTable("AspNetUserClaims", "perfReview");
             });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -206,7 +206,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
 
                 b.HasIndex("RoleId");
 
-                b.ToTable("AspNetUserRoles");
+                b.ToTable("AspNetUserRoles", "perfReview");
             });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -227,7 +227,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
 
                 b.HasKey("UserId", "LoginProvider", "Name");
 
-                b.ToTable("AspNetUserTokens");
+                b.ToTable("AspNetUserTokens", "perfReview");
             });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
