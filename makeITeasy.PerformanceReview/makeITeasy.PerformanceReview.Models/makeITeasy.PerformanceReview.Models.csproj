@@ -8,9 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="DelegateDecompiler" Version="0.30.0" />
-    <PackageReference Include="makeITeasy.AppFramework.Models" Version="1.1.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />	  
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.4" />
+    <PackageReference Include="makeITeasy.AppFramework.Models" Version="1.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />	  
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.5" />
   </ItemGroup>
 
 </Project>
