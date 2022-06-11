@@ -24,6 +24,8 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .IsUnique()
                 .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+            entity.Property(e => e.Education).HasMaxLength(255);
+
             entity.Property(e => e.Email).HasMaxLength(256);
 
             entity.Property(e => e.ManagerId).HasMaxLength(450);

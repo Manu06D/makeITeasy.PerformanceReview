@@ -10,10 +10,10 @@
 	  <PackageReference Include="Autofac" Version="6.4.0" />
 	  <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 	  <PackageReference Include="AutoMapper.Contrib.Autofac.DependencyInjection" Version="6.1.0" />
-	  <PackageReference Include="makeITeasy.AppFramework.Core" Version="1.1.10" />
-	  <PackageReference Include="makeITeasy.AppFramework.Infrastructure.EF6" Version="6.1.16" />
+	  <PackageReference Include="makeITeasy.AppFramework.Core" Version="1.1.11-beta01" />
+	  <PackageReference Include="makeITeasy.AppFramework.Infrastructure.EF6" Version="6.1.17-beta01" />
 	  <PackageReference Include="makeITeasy.AppFramework.Models" Version="1.1.6" />
-	  <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.4.0" />
+	  <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="8.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.5" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />

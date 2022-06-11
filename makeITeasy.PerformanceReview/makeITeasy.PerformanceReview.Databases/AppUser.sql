@@ -17,8 +17,12 @@
     [AccessFailedCount]    INT                NOT NULL,
     [Name] VARCHAR(250) NULL, 
     [ManagerId] NVARCHAR (450) NULL, 
+    [LevelId] INT NULL, 
+    [FirstYearOfWork] INT NULL, 
+    [Education] NVARCHAR(255) NULL, 
     CONSTRAINT [PK_AppUsers] PRIMARY KEY CLUSTERED ([Id] ASC), 
-    CONSTRAINT [FK_AppUser_ToTable] FOREIGN KEY ([ManagerId]) REFERENCES [perfReview].[AppUser]([Id])
+    CONSTRAINT [FK_AppUser_ToTable] FOREIGN KEY ([ManagerId]) REFERENCES [perfReview].[AppUser]([Id]),
+    CONSTRAINT [FK_AppUser_ToLevel] FOREIGN KEY ([LevelId]) REFERENCES [perfReview].[Level]([Id])
 )
 
 

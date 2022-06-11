@@ -15,8 +15,10 @@ namespace makeITeasy.PerformanceReview.Models
         public int FormId { get; set; }
         public string Description { get; set; } = null!;
         public string? Category { get; set; }
+        public int? LevelId { get; set; }
 
         public virtual Form Form { get; set; } = null!;
+        public virtual Level? Level { get; set; }
         public virtual ICollection<EvaluationItem> EvaluationItems { get; set; }
     }
 }

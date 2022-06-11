@@ -15,6 +15,11 @@ namespace makeITeasy.PerformanceReview.Models
             InverseManager = new HashSet<AppUser>();
         }
 
+        public int? LevelId { get; set; }
+        public int? FirstYearOfWork { get; set; }
+        public string? Education { get; set; }
+
+        public virtual Level? Level { get; set; }
         public virtual AppUser? Manager { get; set; }
         public virtual Employee EmployeeUserIdentity { get; set; } = null!;
         public virtual ICollection<Employee> EmployeeManagerIdentities { get; set; }
