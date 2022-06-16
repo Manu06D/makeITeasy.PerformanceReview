@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Extensions;
 using makeITeasy.AppFramework.Core.Commands;
 using makeITeasy.PerformanceReview.BusinessCore.Queries.EvalutationQueries;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.LevelQueries;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 {
@@ -40,6 +41,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 
         private TableGroupDefinition<FormItem> _groupDefinition = new() { GroupName = "Group", Indentation = false, Expandable = true, Selector = (e) => e.Category };
 
+        public class MyLevelIdComparer : Comparer<Level>{ public override int Compare(Level x, Level y) { return x.Id.CompareTo(y.Id); } }
 
         protected override async Task OnInitializedAsync()
         {
@@ -47,8 +49,24 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 
             currentIdentityUserID = currentClaims.GetIdentityUserID();
 
-            evaluation = (await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Evaluation>(
-                new EditEvalutationQuery(Id), false))).Results.FirstOrDefault();
+            evaluation = (await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Evaluation>(new EditEvalutationQuery(Id), false))).Results.FirstOrDefault();
+
+            if (evaluation?.UserIdentity?.LevelId.HasValue == true && evaluation.Form.FormItems.Any(x => x.LevelId.HasValue))
+            {
+                List<Level>? allLevels = (await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Level>(new BasicLevelQuery(), false))).Results.OrderBy(x => x.Index).ToList();
+
+                int levelIndex = allLevels.BinarySearch(new Level() { Id = evaluation?.UserIdentity?.LevelId.Value ?? -1 }, new MyLevelIdComparer());
+
+                if(levelIndex >= 0)
+                {
+                    List<int> acceptedLevel = allLevels.GetRange(Math.Max(0, levelIndex - 2), levelIndex).Select(x => x.Id).ToList();
+                    acceptedLevel.AddRange(allLevels.GetRange(levelIndex, Math.Min(allLevels.Count, levelIndex + 2)).Select(x => x.Id).ToList());
+                    //int minLevel = allLevels[Math.Max(0, levelIndex - 2)].Index;
+                    //int maxLevel = allLevels[Math.Min(allLevels.Count, levelIndex + 2)].Index;
+
+                    evaluation.Form.FormItems = evaluation.Form.FormItems.Where(x => !x.LevelId.HasValue || acceptedLevel.Contains(x.LevelId.Value)).ToList();
+                }
+            }
 
             foreach (var items in evaluation.Form.FormItems)
             {
@@ -62,7 +80,6 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
                     evaluation.EvaluationItems.Add(new EvaluationItem() { FormItemId = items.Id, UserIdentityId = evaluation?.ManagerIdentityId, EvaluationId = evaluation.Id, Rating = -1 });
                 }
             }
-
 
             if (evaluation == null)
             {

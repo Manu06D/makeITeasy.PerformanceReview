@@ -35,6 +35,11 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PerformanceReviewQuestion_ToPerformanceReview");
 
+            entity.HasOne(d => d.Level)
+                .WithMany(p => p.FormItems)
+                .HasForeignKey(d => d.LevelId)
+                .HasConstraintName("FK_FormItem_ToTable");
+
             OnConfigurePartial(entity);
         }
 

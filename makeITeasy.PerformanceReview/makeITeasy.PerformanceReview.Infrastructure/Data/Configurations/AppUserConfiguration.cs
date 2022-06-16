@@ -40,6 +40,11 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data.Configurations
 
             entity.Property(e => e.UserName).HasMaxLength(256);
 
+            entity.HasOne(d => d.Level)
+                .WithMany(p => p.AppUsers)
+                .HasForeignKey(d => d.LevelId)
+                .HasConstraintName("FK_AppUser_ToLevel");
+
             entity.HasOne(d => d.Manager)
                 .WithMany(p => p.InverseManager)
                 .HasForeignKey(d => d.ManagerId)

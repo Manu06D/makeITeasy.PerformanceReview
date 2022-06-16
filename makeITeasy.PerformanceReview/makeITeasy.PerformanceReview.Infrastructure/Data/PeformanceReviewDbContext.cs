@@ -18,6 +18,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
         public virtual DbSet<EvaluationItem> EvaluationItems { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<FormItem> FormItems { get; set; }
+        public virtual DbSet<Level> Levels { get; set; }
 
         public PeformanceReviewDbContext(DbContextOptions<PeformanceReviewDbContext> options) : base(options)
         {
@@ -33,6 +34,7 @@ namespace makeITeasy.PerformanceReview.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new Configurations.EvaluationItemConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.FormConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.FormItemConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.LevelConfiguration());
             OnModelCreatingPartial(modelBuilder);
         }
 

@@ -36,6 +36,10 @@
       {
          "Name": "[perfReview].[FormItem]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[perfReview].[Level]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "makeITeasy.PerformanceReview.Databases\\makeITeasy.PerformanceReview.Databases.sqlproj",
