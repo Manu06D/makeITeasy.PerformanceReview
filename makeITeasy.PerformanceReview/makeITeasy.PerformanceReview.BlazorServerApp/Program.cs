@@ -13,10 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) => config.WriteTo.Console().WriteTo.Debug()) ;
 
-
-var connectionString = builder.Configuration.GetConnectionString("dbConnectionString");;
 builder.Services.AddOptions();
 
+//register db
+var connectionString = builder.Configuration.GetConnectionString("dbConnectionString");;
 builder.Services.AddDbContext<PeformanceReviewDbContext>(options => options.UseSqlServer(connectionString));;
 
 // Add services to the container.
@@ -50,7 +50,6 @@ builder.Services.AddDefaultIdentity<AppUser>(options =>
 builder.Services
     .AddScoped<AuthenticationStateProvider, makeITeasy.PerformanceReview.BlazorServerApp.Areas.Identity.RevalidatingIdentityAuthenticationStateProvider<AppUser>>()
     .AddScoped<TokenProvider>();
-;
 
 ////MakeItEasy
 builder.ConfigureDatabase();
