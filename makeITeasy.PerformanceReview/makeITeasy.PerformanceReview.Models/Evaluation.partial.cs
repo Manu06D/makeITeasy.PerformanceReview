@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using DelegateDecompiler;
+﻿using DelegateDecompiler;
 
 using makeITeasy.AppFramework.Models;
 

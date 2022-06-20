@@ -1,9 +1,13 @@
-﻿using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries;
+﻿using makeITeasy.AppFramework.Core.Queries;
+using makeITeasy.PerformanceReview.BusinessCore.Queries.EmployeeQueries;
 using makeITeasy.PerformanceReview.Models;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
+using System.Data;
 using System.Security.Claims;
 
 namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security
@@ -11,9 +15,9 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security
     public class ExtendedUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<AppUser>
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly MediatR.IMediator _mediator;
+        private readonly IMediator _mediator;
 
-        public ExtendedUserClaimsPrincipalFactory(UserManager<AppUser> userManager, IOptions<IdentityOptions> optionsAccessor, MediatR.IMediator mediator) : base(userManager, optionsAccessor)
+        public ExtendedUserClaimsPrincipalFactory(UserManager<AppUser> userManager, IOptions<IdentityOptions> optionsAccessor, IMediator mediator) : base(userManager, optionsAccessor)
         {
             _userManager = userManager;
             _mediator = mediator;
@@ -21,23 +25,30 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security
 
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(AppUser user)
         {
-            var identity = await base.GenerateClaimsAsync(user);
+            ClaimsIdentity identityClaim = await base.GenerateClaimsAsync(user);
+            IList<string> roles = await _userManager.GetRolesAsync(user);
 
-            var roles = await _userManager.GetRolesAsync(user);
+            AddRolesToIdentityClaims(identityClaim, roles);
 
-            foreach(var role in roles)
-            {
-                identity.AddClaim(new Claim(ClaimTypes.Role, role));
-            }
+            //await AddCustomClaimsAsync(user, identityClaim);
 
-            var results = await _mediator.Send(new AppFramework.Core.Queries.GenericQueryCommand<Employee>(new BasicEmployeeQuery() { UserIdentityId = user.Id }, false));
+            return identityClaim;
+        }
 
-            if (results.Results.Count > 0)
+        private async Task AddCustomClaimsAsync(AppUser user, ClaimsIdentity identity)
+        {
+            QueryResult<Employee> results =
+                await _mediator.Send(new GenericQueryCommand<Employee>(new BasicEmployeeQuery() { UserIdentityId = user.Id }, false));
+
+            if (results?.Results?.Count > 0)
             {
                 identity.AddClaim(new Claim("EmployeeId", results.Results.First().Id.ToString()));
             }
+        }
 
-            return identity;
+        private static void AddRolesToIdentityClaims(ClaimsIdentity identity, IList<string> roles)
+{
+            identity.AddClaims(roles.Distinct().Select(x => new Claim(ClaimTypes.Role, x)));
         }
     }
 }

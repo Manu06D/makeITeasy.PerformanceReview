@@ -21,32 +21,31 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Startup
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
             Assembly modelAssembly = typeof(EmployeeService).Assembly;
+
             Assembly[] assembliesToScan = new Assembly[]
                 {
-                    makeITeasy.AppFramework.Core.AppFrameworkCore.Assembly,
+                    AppFramework.Core.AppFrameworkCore.Assembly,
                     modelAssembly,
                     AppFrameworkModels.Assembly
                 };
 
-            builder.Host.ConfigureContainer<ContainerBuilder>(
-            builder =>
-            {
-                builder.RegisterModule(new RegisterAutofacModule() { Assemblies = assembliesToScan });
-                builder.RegisterAutoMapper(assemblies: assembliesToScan);
-                builder.RegisterMediatR(assembliesToScan);
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule(new RegisterAutofacModule() { Assemblies = assembliesToScan });
+                    builder.RegisterAutoMapper(assemblies: assembliesToScan);
+                    builder.RegisterMediatR(assembliesToScan);
 
-                builder.RegisterType<PeformanceReviewDbContext>();
+                    builder.RegisterType<PeformanceReviewDbContext>();
 
-                builder.RegisterGeneric(typeof(PeformanceReviewCatalogRepository<>)).As(typeof(IAsyncRepository<>)).InstancePerLifetimeScope()
-                        .PropertiesAutowired()
-                        .OnActivated(args => AutofacHelper.InjectProperties(args.Context, args.Instance, true));
+                    builder.RegisterGeneric(typeof(PeformanceReviewCatalogRepository<>)).As(typeof(IAsyncRepository<>))
+                            .InstancePerLifetimeScope()
+                            .PropertiesAutowired()
+                            .OnActivated(args => AutofacHelper.InjectProperties(args.Context, args.Instance, true));
 
-                builder.RegisterAssemblyTypes(modelAssembly).Where(t => t.IsClosedTypeOf(typeof(IValidator<>))).AsImplementedInterfaces();
+                    builder.RegisterAssemblyTypes(modelAssembly).Where(t => t.IsClosedTypeOf(typeof(IValidator<>))).AsImplementedInterfaces();
 
-                builder.RegisterType<AutofacValidatorFactory>().As<IValidatorFactory>().SingleInstance();
-
-            }
-        );
+                    builder.RegisterType<AutofacValidatorFactory>().As<IValidatorFactory>().SingleInstance();
+                });
         }
     }
 }

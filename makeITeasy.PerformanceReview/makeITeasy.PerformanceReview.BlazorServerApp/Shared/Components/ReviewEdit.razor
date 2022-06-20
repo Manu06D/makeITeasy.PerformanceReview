@@ -57,11 +57,7 @@
         @if (Mode == ReviewEditMode.Review && @currentClaims.IsManager() &&  evaluation.CanReview)//evaluation.State != EvaluationState.Reviewed)
         {
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Validate" Class="d-inline-flex pa-4">Validate Review</MudButton>
-            
-@*            @if ( == true && )
-            {
-            }
-*@        }
+        }
         @if(evaluation.CanEdit)
         {
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Update" Class="d-inline-flex pa-4">Save or Update</MudButton>

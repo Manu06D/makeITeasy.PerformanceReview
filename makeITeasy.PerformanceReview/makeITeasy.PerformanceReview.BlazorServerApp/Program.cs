@@ -1,13 +1,15 @@
+using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security;
 using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Startup;
+using makeITeasy.PerformanceReview.Infrastructure.Data;
+using makeITeasy.PerformanceReview.Models;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 using MudBlazor.Services;
-using Microsoft.EntityFrameworkCore;
-using makeITeasy.PerformanceReview.Infrastructure.Data;
-using makeITeasy.PerformanceReview.BlazorServerApp.Modules.Security;
+
 using Serilog;
-using makeITeasy.PerformanceReview.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

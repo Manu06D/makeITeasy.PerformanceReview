@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -17,81 +16,66 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             public string? Email { get; set; }
 
             public string? Role { get; set; }
-
-            public void Mapping(AutoMapper.Profile profile)
-            {
-                if (profile != null)
-                {
-                    profile.CreateMap<AppUser, UserViewModel>().ForMember(d => d.Role, opt => opt.MapFrom(new CustomResolver()));
-                }
-            }
-
-            public class CustomResolver : AutoMapper.IValueResolver<AppUser, UserViewModel, String>
-            {
-                string IValueResolver<AppUser, UserViewModel, string>.Resolve(AppUser source, UserViewModel destination, string destMember, ResolutionContext context)
-                {
-                    string result = string.Empty;
-                    var _userManager = (UserManager<AppUser>)context.Options.Items["RoleManager"];
-                    if (_userManager != null)
-                    {
-                        IList<string> roles = Task.Run(async () => await _userManager.GetRolesAsync(source)).Result;
-                        result = string.Join(",", roles);
-                    }
-
-                    return result;
-                }
-            }
         }
 
         private MudTable<UserViewModel>? table;
         private string? searchString = null;
-        private UserViewModel? elementBeforeEdit;
+        private UserViewModel? userBeforeEdit;
         private IList<IdentityRole>? dbRoles;
 
         [Inject]
-        private UserManager<AppUser>? _userManager { get; set; }
+        private UserManager<AppUser>? userManager { get; set; }
         [Inject]
-        private RoleManager<IdentityRole>? _roleManager { get; set; }
-
+        private RoleManager<IdentityRole>? roleManager { get; set; }
         [Inject]
         private IMapper? _mapper { get; set; }
-
         [Inject]
         ISnackbar? Snackbar { get; set; }
-
         [Inject]
         private IDialogService? DialogService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            dbRoles = _roleManager?.Roles.ToList();
+            dbRoles = roleManager?.Roles.ToList();
         }
 
         private async Task OnSearch(string text)
         {
             searchString = text;
-            await table.ReloadServerData();
+            await table!.ReloadServerData();
         }
 
-        private async Task<TableData<UserViewModel>> ServerReload(TableState state)
+        private async Task<TableData<UserViewModel>> ServerReloadAsync(TableState state)
         {
-            var users = _userManager?.Users;
+            IQueryable<AppUser>? users = userManager?.Users;
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                users = users?.Where(x => x.Email.StartsWith(searchString));
+                users = users?.Where(x => x.Email.StartsWith(searchString) || x.Name.StartsWith(searchString));
             }
 
-            return new TableData<UserViewModel>() {
-                Items = _mapper?.Map<List<UserViewModel>>(users?.ToList().Take(state.PageSize).Skip(state.Page * state.PageSize), opt => opt.Items["RoleManager"] = _userManager)
-            };
+            return new TableData<UserViewModel>() {Items = await AddRolesToResultAndMap(users?.Take(state.PageSize).Skip(state.Page * state.PageSize).ToList()) };
+        }
+
+        private async Task<List<UserViewModel>>? AddRolesToResultAndMap(IEnumerable<AppUser>? users)
+        {
+            return users.Select(x => AddRolesAndMapUser(x)).ToList();
+        }
+
+        private UserViewModel AddRolesAndMapUser(AppUser user)
+        {
+            UserViewModel userViewModel = _mapper?.Map<UserViewModel>(user);
+            //HACK : this can't be //ized ... to be checked
+            userViewModel.Role = string.Join(',', Task.Run(async () => await userManager.GetRolesAsync(user)).Result);
+
+            return userViewModel;
         }
 
         private void BackupItem(object element)
         {
             if(element is UserViewModel user)
             {
-                elementBeforeEdit = new()
+                userBeforeEdit = new()
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -99,41 +83,44 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
                 };
             }
         }
+
         private void ResetItemToOriginalValues(object element)
         {
-            if (element is UserViewModel user)
+            if (element is UserViewModel user && userBeforeEdit != null)
             {
-                user.Id = elementBeforeEdit?.Id;
-                user.Email = elementBeforeEdit?.Email;
-                user.Role = elementBeforeEdit?.Role;
+                user.Id = userBeforeEdit.Id;
+                user.Email = userBeforeEdit.Email;
+                user.Role = userBeforeEdit.Role;
             }
         }
 
-        private void ItemHasBeenCommitted(object element)
+        private void ProcessToSaveUser(object element)
         {
-            Task.Run(async () => await ItemHasBeenCommittedAsync(element));
+            Task.Run(async () => await ProcessToSaveUserAsync(element));
         }
 
-        private async Task ItemHasBeenCommittedAsync(object element)
+        private async Task ProcessToSaveUserAsync(object element)
         {
             if (element is UserViewModel newUser)
             {
-                if (newUser.Role != elementBeforeEdit?.Role && _userManager != null)
+                if (newUser.Role != userBeforeEdit?.Role && userManager != null)
                 {
-                    var user = await _userManager.FindByIdAsync(elementBeforeEdit?.Id ?? string.Empty);
+                    var user = await userManager.FindByIdAsync(userBeforeEdit?.Id ?? string.Empty);
+
                     if (user != null)
                     {
-                        if (!string.IsNullOrEmpty(elementBeforeEdit?.Role))
+                        if (!string.IsNullOrEmpty(userBeforeEdit?.Role))
                         {
-                            await _userManager.RemoveFromRoleAsync(user, elementBeforeEdit?.Role ?? String.Empty);
+                            await userManager.RemoveFromRoleAsync(user, userBeforeEdit?.Role ?? string.Empty);
                         }
-                        await _userManager.AddToRoleAsync(user, newUser.Role);
+
+                        await userManager.AddToRoleAsync(user, newUser.Role);
                     }
                 }
             }
         }
 
-        private async Task CreateNewAsync()
+        private async Task CreateNewUserAsync()
         {
             var dialog = 
                 DialogService?.Show<CreateEditUser>(
@@ -145,7 +132,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
 
             if (!result.Cancelled)
             {
-                int.TryParse(result.Data.ToString(), out int createdReview);
+                _ = int.TryParse(result.Data.ToString(), out int createdReview);
                 Snackbar?.Add($"Review Created (id:{createdReview})", Severity.Success);
                 await table.ReloadServerData();
             }

@@ -18,52 +18,36 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
         public class EvalutationViewModel : IMapFrom<Evaluation>
         {
             public int Id { get; set; }
-
             public DateTime? CreationDate { get; set; }
-
             public string? UserIdentityName { get; set; }
-
+            public string? FormName { get; set; }
             public EvaluationState? State { get; set; }
-
             public bool FilledByManager { get; set; }
             public bool FilledByEmployee { get; set; }
-
-            public void Mapping(AutoMapper.Profile profile)
-            {
-                if (profile != null)
-                {
-                    profile.CreateMap<Evaluation, EvalutationViewModel>();
-                }
-            }
             public bool IsReviewed { get; set; }
-
             public bool IsFilled => FilledByEmployee && FilledByManager;
         }
 
         [CascadingParameter]
-        private Task<AuthenticationState>? authenticationStateTask { get; set; }
+        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
         [Inject]
         private IDialogService? DialogService { get; set; }
-
         [Inject]
         private ISnackbar? Snackbar { get; set; }
-
         [Inject]
-        private MediatR.IMediator? _mediator { get; set; }
+        private MediatR.IMediator? Mediator { get; set; }
 
         private System.Security.Claims.ClaimsPrincipal? currentClaims;
-
         private GenericList<Evaluation, EvalutationViewModel, ManagerOrEmployeeEvaluationQuery>? table;
         private ManagerOrEmployeeEvaluationQuery? defaultQuery;
-
         private DialogOptions defaultDialogOptions = new() {CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, DisableBackdropClick = false};
 
         protected override async Task OnInitializedAsync()
         {
-            currentClaims = (await authenticationStateTask).User;
+            currentClaims = (await AuthenticationStateTask).User;
 
-            defaultQuery = new ManagerOrEmployeeEvaluationQuery() { IdentityId = currentClaims.GetIdentityUserID(),  };
+            defaultQuery = new ManagerOrEmployeeEvaluationQuery() { IdentityId = currentClaims.GetIdentityUserID() };
         }
 
         private async Task CreateNewAsync()
@@ -105,7 +89,6 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             }
         }
 
-
         private async Task DeleteAsync(Evaluation entity)
         {
             var parameters = new DialogParameters();
@@ -118,7 +101,7 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Pages
             var dialogResult = await dialog.Result;
             if (!dialogResult.Cancelled)
             {
-                var result = await _mediator.Send(new DeleteEntityCommand<Evaluation>(new Evaluation() {Id = entity.Id}));
+                var result = await Mediator.Send(new DeleteEntityCommand<Evaluation>(new Evaluation() {Id = entity.Id}));
                 if (result.Result == CommandState.Success)
                 {
                     Snackbar.Add($"Review Deleted", Severity.Success);

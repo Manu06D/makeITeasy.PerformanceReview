@@ -5,18 +5,18 @@
 @using Microsoft.AspNetCore.Identity
 @using makeITeasy.PerformanceReview.BlazorServerApp.Shared.Components
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<UserViewModel>>>(ServerReload))" SortLabel="Sort by" Bordered=true Striped=true @ref="table" 
-    CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted">
+<MudTable ServerData="@(new Func<TableState, Task<TableData<UserViewModel>>>(ServerReloadAsync))" SortLabel="Sort by" Bordered=true Striped=true @ref="table"
+          CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ProcessToSaveUser">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Manage users</MudText>
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
-        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" OnClick="CreateNewAsync" />
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" OnClick="CreateNewUserAsync" Disabled=true/>
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Email</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Roles</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Name" T="UserViewModel">Role</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>

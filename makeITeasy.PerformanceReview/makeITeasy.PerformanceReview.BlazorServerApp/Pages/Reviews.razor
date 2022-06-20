@@ -11,15 +11,15 @@
 <GenericList TItem=Evaluation TViewItem=EvalutationViewModel TQuery=ManagerOrEmployeeEvaluationQuery 
             Title="List of Reviews" CreateNewHandler="CreateNewAsync" DefaultSortColumn="CreationDate"  @ref="table" Query="defaultQuery">
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortLabel="Id" T="EvalutationViewModel" >Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="UserIdentity.Name" T="EvalutationViewModel">EmployeeName</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="UserIdentity.Name" T="EvalutationViewModel">Employee</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Form.Name" T="EvalutationViewModel">Form</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="State" T="EvalutationViewModel">State</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="CreationDate" T="EvalutationViewModel" InitialDirection="SortDirection.Descending">Creation Date</MudTableSortLabel></MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.UserIdentityName</MudTd>
+        <MudTd DataLabel="Name">@context.FormName</MudTd>
         <MudTd DataLabel="Name">@context.State</MudTd>
         <MudTd DataLabel="Name">@context.CreationDate?.ToString("dd MMM yyyy HH:mm")</MudTd>
         <MudTd>

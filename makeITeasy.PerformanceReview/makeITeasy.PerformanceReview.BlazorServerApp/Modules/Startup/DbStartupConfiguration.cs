@@ -11,7 +11,6 @@ namespace makeITeasy.PerformanceReview.BlazorServerApp.Modules.Startup
             builder.Services.AddDbContextFactory<PeformanceReviewDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("dbConnectionString"))
-
                 .EnableDetailedErrors()
                 .EnableSensitiveDataLogging()
                 ;

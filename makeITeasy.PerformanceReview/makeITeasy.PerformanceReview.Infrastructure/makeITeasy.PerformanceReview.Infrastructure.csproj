@@ -10,8 +10,8 @@
     <PackageReference Include="makeITeasy.AppFramework.Core" Version="1.1.11-beta01" />
     <PackageReference Include="makeITeasy.AppFramework.Infrastructure.EF6" Version="6.1.17-beta01" />
     <PackageReference Include="makeITeasy.AppFramework.Models" Version="1.1.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
   </ItemGroup>
 
   <ItemGroup>
